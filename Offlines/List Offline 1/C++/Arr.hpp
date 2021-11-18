@@ -78,11 +78,9 @@ public:
             listArray = tempList;
         }
         else {
-            std::cout << "Here" << std::endl;
             for (int i = listLength; i >= curr + 1; i--) {
                 listArray[i] = listArray[i - 1];
             }
-            std::cout << "Done" << std::endl;
             listArray[curr] = item;
         }
         listLength++;
@@ -97,7 +95,7 @@ public:
             for (int i = 0; i < listLength; i++) {
                 tempList[i] = listArray[i];
             }
-            tempList[listLength + 1] = item;
+            tempList[listLength] = item;
             delete[] listArray;
             listArray = tempList;
         }
@@ -158,7 +156,7 @@ public:
     }
 
     void moveToPos(int pos) {
-        assertm(pos >= 0 && pos < listLength, "Out of bounds");
+        assertm(pos >= 0 && pos <= listLength, "Out of bounds");
         curr = pos;
         std::cout << -1 << std::endl;
         print();
