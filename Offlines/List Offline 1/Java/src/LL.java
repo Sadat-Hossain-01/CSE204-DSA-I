@@ -179,7 +179,6 @@ public class LL<T> implements List<T> {
         System.out.println(this);
     }
 
-    //ঝামেলা ঠিক করো
     @Override
     public T getValue() {
         if (cur.getNext() == null) return null;

@@ -5,6 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int init_len = scanner.nextInt();
         int chunk_size = scanner.nextInt();
+        scanner.next();
 
         Integer[] nums = new Integer[init_len];
         for (int i=0; i<init_len; i++) nums[i] = scanner.nextInt();
