@@ -1,0 +1,12 @@
+
+*.sqlite
+*.json
+*.ipch
+*.gch
+*.xml
+*.iml
+*.db-wal
+*.db-shm
+*.db
+Offlines/List Offline 1/C++/.vs/C++/v16/.suo
+*.exe
