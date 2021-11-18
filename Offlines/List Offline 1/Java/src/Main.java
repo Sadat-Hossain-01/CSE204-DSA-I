@@ -8,58 +8,29 @@ public class Main {
 
         Integer[] nums = new Integer[init_len];
         for (int i=0; i<init_len; i++) nums[i] = scanner.nextInt();
-        for (var i : nums) System.out.println(i);
-        AList<Integer> myList = new AList<>(chunk_size, init_len, nums);
+//        Arr<Integer> myList = new Arr<>(chunk_size, init_len, nums);
+        LL<Integer> myList = new LL<>(init_len, nums);
 
         while (true){
             int Q, P;
             Q = scanner.nextInt();
             P = scanner.nextInt();
             if (Q == 0) break;
-            switch (Q)
-            {
-                case 1:
-                    myList.clear();
-                    break;
-                case 2:
-                    myList.insert(P);
-                    break;
-                case 3:
-                    myList.append(P);
-                    break;
-                case 4:
-                    myList.remove();
-                    break;
-                case 5:
-                    myList.moveToStart();
-                    break;
-                case 6:
-                    myList.moveToEnd();
-                    break;
-                case 7:
-                    myList.prev();
-                    break;
-                case 8:
-                    myList.next();
-                    break;
-                case 9:
-                    myList.length();
-                    break;
-                case 10:
-                    myList.currPos();
-                    break;
-                case 11:
-                    myList.moveToPos(P);
-                    break;
-                case 12:
-                    myList.getValue();
-                    break;
-                case 13:
-                    myList.Search(P);
-                    break;
-                default:
-                    System.out.println("Please input a proper choice");
-                    break;
+            switch (Q) {
+                case 1 -> myList.clear();
+                case 2 -> myList.insert(P);
+                case 3 -> myList.append(P);
+                case 4 -> myList.remove();
+                case 5 -> myList.moveToStart();
+                case 6 -> myList.moveToEnd();
+                case 7 -> myList.prev();
+                case 8 -> myList.next();
+                case 9 -> myList.length();
+                case 10 -> myList.currPos();
+                case 11 -> myList.moveToPos(P);
+                case 12 -> myList.getValue();
+                case 13 -> myList.Search(P);
+                default -> System.out.println("Please input a proper choice");
             }
         }
         scanner.close();

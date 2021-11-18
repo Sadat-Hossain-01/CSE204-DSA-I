@@ -1,20 +1,33 @@
-public class AList<T> implements List<T> {
+public class Arr<T> implements List<T> {
     private int maxLength;
     private int listLength;
     private int chunkLength;
     private int cur;
     private T[] listArray;
 
-    public AList() {
+    public Arr() {
         listLength = cur = 0;
         System.out.println(this);
     }
 
-    public AList(int chunkLength) {
+    public Arr(int chunkLength) {
         this.chunkLength = chunkLength;
         listLength = cur = 0;
         maxLength = chunkLength;
         listArray = (T[]) new Object[maxLength];
+        System.out.println(this);
+    }
+
+    public Arr(int chunkLength, int Y, T[] givenList) {
+        assert Y <= chunkLength : "Given list larger than initial length";
+        this.chunkLength = chunkLength;
+        maxLength = chunkLength;
+        listLength = Y;
+        cur = 0;
+        listArray = (T[]) new Object[maxLength];
+        for (int i = 0; i < Y; i++) {
+            listArray[i] = givenList[i];
+        }
         System.out.println(this);
     }
 
@@ -31,19 +44,6 @@ public class AList<T> implements List<T> {
             answer.append("|");
         }
         return answer.toString();
-    }
-
-    public AList(int chunkLength, int Y, T[] givenList) {
-        assert Y <= chunkLength : "Given list larger than initial length";
-        this.chunkLength = chunkLength;
-        maxLength = chunkLength;
-        listLength = Y;
-        cur = 0;
-        listArray = (T[]) new Object[maxLength];
-        for (int i = 0; i < Y; i++) {
-            listArray[i] = givenList[i];
-        }
-        System.out.println(this);
     }
 
     @Override
