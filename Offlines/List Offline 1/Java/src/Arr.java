@@ -7,7 +7,7 @@ public class Arr<T> implements List<T> {
 
     public Arr() {
         listLength = cur = 0;
-        System.out.println(this);
+        //System.out.println(this);
     }
 
     public Arr(int chunkLength) {
@@ -15,7 +15,7 @@ public class Arr<T> implements List<T> {
         listLength = cur = 0;
         maxLength = chunkLength;
         listArray = (T[]) new Object[maxLength];
-        System.out.println(this);
+        //System.out.println(this);
     }
 
     public Arr(int chunkLength, int Y, T[] givenList) {
@@ -28,7 +28,7 @@ public class Arr<T> implements List<T> {
         for (int i = 0; i < Y; i++) {
             listArray[i] = givenList[i];
         }
-        System.out.println(this);
+        //System.out.println(this);
     }
 
     @Override
@@ -50,8 +50,8 @@ public class Arr<T> implements List<T> {
     public void clear() {
         listLength = 0;
         cur = 0;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
@@ -74,8 +74,8 @@ public class Arr<T> implements List<T> {
             listArray[cur] = item;
         }
         listLength++;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
@@ -92,8 +92,8 @@ public class Arr<T> implements List<T> {
             listArray[listLength] = item;
         }
         listLength++;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
@@ -104,50 +104,50 @@ public class Arr<T> implements List<T> {
             listArray[i - 1] = listArray[i];
         }
         listLength--;
-        System.out.println(ret);
-        System.out.println(this);
+//        System.out.println(ret);
+        //System.out.println(this);
         return ret;
     }
 
     @Override
     public void moveToStart() {
         cur = 0;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
     public void moveToEnd() {
         cur = listLength;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
     public void prev() {
-        if (cur > 0) cur --;
-        System.out.println("-1");
-        System.out.println(this);
+        if (cur > 0) cur--;
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
     public void next() {
         if (cur < listLength) cur++;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
     public int length() {
-        System.out.println(listLength);
-        System.out.println(this);
+//        System.out.println(listLength);
+        //System.out.println(this);
         return listLength;
     }
 
     @Override
     public int currPos() {
-        System.out.println(cur);
-        System.out.println(this);
+//        System.out.println(cur);
+        //System.out.println(this);
         return cur;
     }
 
@@ -155,29 +155,29 @@ public class Arr<T> implements List<T> {
     public void moveToPos(int pos) {
         assert pos >= 0 && pos <= listLength : "Out of bounds";
         cur = pos;
-        System.out.println("-1");
-        System.out.println(this);
+//        System.out.println("-1");
+        //System.out.println(this);
     }
 
     @Override
     public T getValue() {
         assert cur >= 0 && cur < listLength : "No value in this position";
-        System.out.println(listArray[cur]);
-        System.out.println(this);
+//        System.out.println(listArray[cur]);
+        //System.out.println(this);
         return listArray[cur];
     }
 
     @Override
     public int Search(T item) {
         int ret = -1;
-        for (int i=0; i<listLength; i++){
+        for (int i = 0; i < listLength; i++) {
             if (listArray[i] == item) {
                 ret = i;
                 break;
             }
         }
-        System.out.println(ret);
-        System.out.println(this);
+//        System.out.println(ret);
+        //System.out.println(this);
         return ret;
     }
 }
