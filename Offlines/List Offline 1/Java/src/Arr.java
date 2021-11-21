@@ -7,6 +7,7 @@ public class Arr<T> implements List<T> {
 
     public Arr() {
         listLength = cur = 0;
+        listArray = (T[]) new Object[maxLength];
     }
 
     public Arr(int chunkLength) {
@@ -28,20 +29,20 @@ public class Arr<T> implements List<T> {
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder answer = new StringBuilder();
-        for (int i = 0; i < listLength; i++) {
-            if (i == cur) answer.append("| ");
-            answer.append(listArray[i]);
-            if (i < listLength - 1) answer.append(" ");
-        }
-        if (cur == listLength) {
-            if (cur != 0) answer.append(" ");
-            answer.append("|");
-        }
-        return answer.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder answer = new StringBuilder();
+//        for (int i = 0; i < listLength; i++) {
+//            if (i == cur) answer.append("| ");
+//            answer.append(listArray[i]);
+//            if (i < listLength - 1) answer.append(" ");
+//        }
+//        if (cur == listLength) {
+//            if (cur != 0) answer.append(" ");
+//            answer.append("|");
+//        }
+//        return answer.toString();
+//    }
 
     @Override
     public void clear() {
@@ -57,7 +58,7 @@ public class Arr<T> implements List<T> {
             for (int i = 0; i < cur; i++) {
                 tempArray[i] = listArray[i];
             }
-            for (int i = listLength; i >= cur + 1; i--) {
+            for (int i = listLength; i > cur; i--) {
                 tempArray[i] = listArray[i - 1];
             }
             tempArray[cur] = item;
@@ -79,12 +80,11 @@ public class Arr<T> implements List<T> {
             for (int i = 0; i < listLength; i++) {
                 tempList[i] = listArray[i];
             }
-            tempList[listLength] = item;
+            tempList[listLength++] = item;
             listArray = tempList;
         } else {
-            listArray[listLength] = item;
+            listArray[listLength++] = item;
         }
-        listLength++;
     }
 
     @Override
@@ -105,7 +105,7 @@ public class Arr<T> implements List<T> {
 
     @Override
     public void moveToEnd() {
-        cur = listLength;
+        cur = listLength - 1;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class Arr<T> implements List<T> {
 
     @Override
     public void next() {
-        if (cur < listLength) cur++;
+        if (cur <= listLength - 2) cur++;
     }
 
     @Override
@@ -130,7 +130,8 @@ public class Arr<T> implements List<T> {
 
     @Override
     public void moveToPos(int pos) {
-        assert pos >= 0 && pos <= listLength : "Out of bounds";
+        //can go to position 0 to position len-1
+        assert pos >= 0 && pos < listLength : "Out of bounds";
         cur = pos;
     }
 

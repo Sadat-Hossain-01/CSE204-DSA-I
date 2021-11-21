@@ -2,20 +2,29 @@ import java.util.Scanner;
 
 public class Main {
     public static <T> void printList(List<T> list){
+        if (list.length() == 0){
+            System.out.println("<>");
+            return;
+        }
         var realCur = list.currPos();
         var len = list.length();
         list.moveToStart();
         int printed = 0;
+        System.out.print("<");
         while (printed < len){
             var now = list.getValue();
-            if (printed == realCur) System.out.print("| ");
-            System.out.print(now + " ");
+            if (printed == realCur) {
+                System.out.print("|");
+                System.out.print(" ");
+            }
+            System.out.print(now);
             printed++;
+            if (printed < len) System.out.print(" ");
             list.next();
         }
-        if (realCur == len) System.out.print("| ");
+        if (realCur == len) System.out.print("|");
+        System.out.println(">");
         list.moveToPos(realCur);
-        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -59,8 +68,8 @@ public class Main {
                 case 13 -> ret = myList.Search(P);
                 default -> System.out.println("Please input a proper choice");
             }
-            System.out.println(ret);
             printList(myList);
+            System.out.println(ret);
             ret = -1;
         }
         scanner.close();

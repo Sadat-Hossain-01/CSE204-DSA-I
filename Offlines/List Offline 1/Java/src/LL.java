@@ -28,16 +28,16 @@ public class LL<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
     private Node<T> cur;
-    private int length;
+    private int listLength;
 
     public LL() {
         head = tail = cur = new Node<>(null);
-        length = 0;
+        listLength = 0;
     }
 
     public LL(int maxLength) {
         head = tail = cur = new Node<>(null);
-        length = 0;
+        listLength = 0;
     }
 
     public LL(int Y, T[] givenList) {
@@ -46,39 +46,38 @@ public class LL<T> implements List<T> {
             var last = new Node<>(givenList[i], null);
             tail.setNext(last);
             tail = last;
-            length++;
+            listLength++;
         }
     }
 
-    @Override
-    public String toString() {
-        StringBuilder answer = new StringBuilder();
-        var temp = head;
-        while (temp != null) {
-            if (temp.getElement() != null) answer.append(temp.getElement()).append(" ");
-            if (temp == cur) {
-                answer.append("| ");
-            }
-            temp = temp.getNext();
-        }
-        return answer.toString();
-    }
+//    @Override
+//    public String toString() {
+//        StringBuilder answer = new StringBuilder();
+//        var temp = head;
+//        while (temp != null) {
+//            if (temp.getElement() != null) answer.append(temp.getElement()).append(" ");
+//            if (temp == cur) {
+//                answer.append("| ");
+//            }
+//            temp = temp.getNext();
+//        }
+//        return answer.toString();
+//    }
 
     @Override
     public void clear() {
         head = tail = cur = new Node<>(null);
-        length = 0;
+        listLength = 0;
     }
 
     @Override
     public void insert(T item) {
-        var it = new Node<>(item, null);
-        it.setNext(cur.getNext());
+        var it = new Node<>(item, cur.getNext());
         if (it.getNext() == null) {
             tail = it;
         }
         cur.setNext(it);
-        length++;
+        listLength++;
     }
 
     @Override
@@ -86,7 +85,7 @@ public class LL<T> implements List<T> {
         var last = new Node<>(item, null);
         tail.setNext(last);
         tail = last;
-        length++;
+        listLength++;
     }
 
     @Override
@@ -99,7 +98,7 @@ public class LL<T> implements List<T> {
         } else {
             cur.setNext(it.getNext());
         }
-        length--;
+        listLength--;
         return it.getElement();
     }
 
@@ -110,7 +109,16 @@ public class LL<T> implements List<T> {
 
     @Override
     public void moveToEnd() {
-        cur = tail;
+        /*
+        We are setting the current element as such cur.getNext().getElement() will return the current item. We expect that a moveToEnd() call followed by remove() will delete the last element.
+         So, we actually need to set the cur to be the element preceding the tail, when moveToEnd() is called.
+         */
+        if (listLength == 0) return;
+        var temp = head;
+        while (temp.getNext() != tail){
+            temp = temp.getNext();
+        }
+        cur = temp;
     }
 
     @Override
@@ -131,7 +139,7 @@ public class LL<T> implements List<T> {
 
     @Override
     public int length() {
-        return length;
+        return listLength;
     }
 
     @Override
@@ -147,7 +155,7 @@ public class LL<T> implements List<T> {
 
     @Override
     public void moveToPos(int pos) {
-        assert pos >= 0 && pos <= length : "Out of bounds";
+        assert pos >= 0 && pos < listLength : "Out of bounds";
         cur = head;
         while (pos-- > 0) {
             cur = cur.getNext();
@@ -157,14 +165,14 @@ public class LL<T> implements List<T> {
     @Override
     public T getValue() {
         if (cur.getNext() == null) return null;
-        var it = cur.getNext().getElement();
-        return it;
+        return cur.getNext().getElement();
     }
 
     @Override
     public int Search(T item) {
         boolean isFound = false;
         int i = 0;
+        int ret = -1;
         var temp = head;
         while (temp.getNext() != null) {
             temp = temp.getNext();
@@ -174,7 +182,6 @@ public class LL<T> implements List<T> {
             }
             i++;
         }
-        int ret = -1;
         if (isFound) ret = i;
         return ret;
     }
