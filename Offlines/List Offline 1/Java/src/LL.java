@@ -33,13 +33,11 @@ public class LL<T> implements List<T> {
     public LL() {
         head = tail = cur = new Node<>(null);
         length = 0;
-        //System.out.println(this);
     }
 
     public LL(int maxLength) {
         head = tail = cur = new Node<>(null);
         length = 0;
-        //System.out.println(this);
     }
 
     public LL(int Y, T[] givenList) {
@@ -50,7 +48,6 @@ public class LL<T> implements List<T> {
             tail = last;
             length++;
         }
-        //System.out.println(this);
     }
 
     @Override
@@ -71,8 +68,6 @@ public class LL<T> implements List<T> {
     public void clear() {
         head = tail = cur = new Node<>(null);
         length = 0;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
@@ -84,8 +79,6 @@ public class LL<T> implements List<T> {
         }
         cur.setNext(it);
         length++;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
@@ -94,8 +87,6 @@ public class LL<T> implements List<T> {
         tail.setNext(last);
         tail = last;
         length++;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
@@ -109,23 +100,17 @@ public class LL<T> implements List<T> {
             cur.setNext(it.getNext());
         }
         length--;
-//        System.out.println(it.getElement());
-        //System.out.println(this);
         return it.getElement();
     }
 
     @Override
     public void moveToStart() {
         cur = head;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
     public void moveToEnd() {
         cur = tail;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
@@ -136,22 +121,16 @@ public class LL<T> implements List<T> {
             temp = temp.getNext();
         }
         cur = temp;
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
     public void next() {
         if (cur.getNext() == null) return;
         cur = cur.getNext();
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
     public int length() {
-//        System.out.println(length);
-        //System.out.println(this);
         return length;
     }
 
@@ -163,8 +142,6 @@ public class LL<T> implements List<T> {
             temp = temp.getNext();
             i++;
         }
-//        System.out.println(i);
-        //System.out.println(this);
         return i;
     }
 
@@ -175,16 +152,12 @@ public class LL<T> implements List<T> {
         while (pos-- > 0) {
             cur = cur.getNext();
         }
-//        System.out.println("-1");
-        //System.out.println(this);
     }
 
     @Override
     public T getValue() {
         if (cur.getNext() == null) return null;
         var it = cur.getNext().getElement();
-//        System.out.println(it);
-        //System.out.println(this);
         return it;
     }
 
@@ -203,8 +176,6 @@ public class LL<T> implements List<T> {
         }
         int ret = -1;
         if (isFound) ret = i;
-//        System.out.println(ret);
-        //System.out.println(this);
         return ret;
     }
 }
