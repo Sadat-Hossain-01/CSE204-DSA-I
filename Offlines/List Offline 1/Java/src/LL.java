@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 class Node<T> {
     private T element;
     private Node<T> next;
@@ -21,6 +23,11 @@ class Node<T> {
 
     public void setNext(Node<T> next) {
         this.next = next;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(element, next);
     }
 }
 
@@ -99,6 +106,7 @@ public class LL<T> implements List<T> {
             cur.setNext(it.getNext());
         }
         listLength--;
+        if (currPos() == listLength) prev();
         return it.getElement();
     }
 
@@ -176,7 +184,7 @@ public class LL<T> implements List<T> {
         var temp = head;
         while (temp.getNext() != null) {
             temp = temp.getNext();
-            if (temp.getElement() == item) {
+            if (temp.getElement().equals(item)) {
                 isFound = true;
                 break;
             }

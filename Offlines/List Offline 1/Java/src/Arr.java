@@ -95,6 +95,7 @@ public class Arr<T> implements List<T> {
             listArray[i - 1] = listArray[i];
         }
         listLength--;
+        if (currPos() == listLength) prev();
         return ret;
     }
 
@@ -145,7 +146,7 @@ public class Arr<T> implements List<T> {
     public int Search(T item) {
         int ret = -1;
         for (int i = 0; i < listLength; i++) {
-            if (listArray[i] == item) {
+            if (listArray[i].equals(item)) {
                 ret = i;
                 break;
             }
