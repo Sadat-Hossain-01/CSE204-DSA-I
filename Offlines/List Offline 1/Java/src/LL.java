@@ -57,6 +57,16 @@ public class LL<T> implements List<T> {
         }
     }
 
+    public LL(int chunkLength, int Y, T[] givenList) {
+        head = tail = cur = new Node<>(null);
+        for (int i = 0; i < Y; i++) {
+            var last = new Node<>(givenList[i], null);
+            tail.setNext(last);
+            tail = last;
+            listLength++;
+        }
+    }
+
     @Override
     public void clear() {
         head = tail = cur = new Node<>(null);
