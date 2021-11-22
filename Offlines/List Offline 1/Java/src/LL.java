@@ -57,20 +57,6 @@ public class LL<T> implements List<T> {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder answer = new StringBuilder();
-//        var temp = head;
-//        while (temp != null) {
-//            if (temp.getElement() != null) answer.append(temp.getElement()).append(" ");
-//            if (temp == cur) {
-//                answer.append("| ");
-//            }
-//            temp = temp.getNext();
-//        }
-//        return answer.toString();
-//    }
-
     @Override
     public void clear() {
         head = tail = cur = new Node<>(null);

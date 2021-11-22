@@ -29,21 +29,6 @@ public class Arr<T> implements List<T> {
         }
     }
 
-//    @Override
-//    public String toString() {
-//        StringBuilder answer = new StringBuilder();
-//        for (int i = 0; i < listLength; i++) {
-//            if (i == cur) answer.append("| ");
-//            answer.append(listArray[i]);
-//            if (i < listLength - 1) answer.append(" ");
-//        }
-//        if (cur == listLength) {
-//            if (cur != 0) answer.append(" ");
-//            answer.append("|");
-//        }
-//        return answer.toString();
-//    }
-
     @Override
     public void clear() {
         listLength = 0;

@@ -31,40 +31,45 @@ public class TNL {
 //        Arr<Integer> Train = new Arr<>(rs, ts, train_stops);
         LL<Integer> Train = new LL<>(ts, train_stops);
 
-        Rickshaw.moveToStart();
-        int done = 0;
-        while (done < rs){
-            var now = Rickshaw.getValue();
-            if (done > 0) System.out.print(",");
-            System.out.print(now);
-            done++;
-            Rickshaw.next();
-        }
-        System.out.println();
+        int operation;
+        operation = scanner.nextInt();
 
-        Rickshaw.moveToStart();
-        done = 0;
-        while (done < rs){
-            var now = Rickshaw.getValue();
-            var it = Bus.Search(now);
-            if (done > 0) System.out.print(",");
-            if (it != -1) System.out.print(now);
-            done++;
-            Rickshaw.next();
-        }
-        System.out.println();
+        if (operation == 1) {
+            Rickshaw.moveToStart();
+            int done = 0;
+            while (done < rs) {
+                var now = Rickshaw.getValue();
+                if (done > 0) System.out.print(",");
+                System.out.print(now);
+                done++;
+                Rickshaw.next();
+            }
+            System.out.println();
 
-        Rickshaw.moveToStart();
-        done = 0;
-        while (done < rs){
-            var now = Rickshaw.getValue();
-            var it = Train.Search(now);
-            if (done > 0) System.out.print(",");
-            if (it != -1) System.out.print(now);
-            done++;
-            Rickshaw.next();
+            Rickshaw.moveToStart();
+            done = 0;
+            while (done < rs) {
+                var now = Rickshaw.getValue();
+                var it = Bus.Search(now);
+                if (done > 0) System.out.print(",");
+                if (it != -1) System.out.print(now);
+                done++;
+                Rickshaw.next();
+            }
+            System.out.println();
+
+            Rickshaw.moveToStart();
+            done = 0;
+            while (done < rs) {
+                var now = Rickshaw.getValue();
+                var it = Train.Search(now);
+                if (done > 0) System.out.print(",");
+                if (it != -1) System.out.print(now);
+                done++;
+                Rickshaw.next();
+            }
+            System.out.println();
         }
-        System.out.println();
 
         scanner.close();
     }
