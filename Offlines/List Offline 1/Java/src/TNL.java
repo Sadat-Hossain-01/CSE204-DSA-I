@@ -31,10 +31,10 @@ public class TNL {
 //        Arr<Integer> Train = new Arr<>(rs, ts, train_stops);
         LL<Integer> Train = new LL<>(ts, train_stops);
 
-        int operation;
-        operation = scanner.nextInt();
+        int task;
+        task = scanner.nextInt();
 
-        if (operation == 1) {
+        if (task == 1) {
             Rickshaw.moveToStart();
             int done = 0;
             while (done < rs) {
