@@ -44,29 +44,55 @@ public class Main {
             Q = scanner.nextInt();
             P = scanner.nextInt();
             if (Q == 0) break;
-            switch (Q) {
-                case 1 -> myList.clear();
-                case 2 -> myList.insert(P);
-                case 3 -> myList.append(P);
-                case 4 -> {
+
+            switch(Q)
+            {
+                case 1:
+                    myList.clear();
+                    break;
+                case 2:
+                    myList.insert(P);
+                    break;
+                case 3:
+                    myList.append(P);
+                    break;
+                case 4:
                     var that = myList.remove();
                     if (that == null) ret = -1;
-                    else ret  = that;
-                }
-                case 5 -> myList.moveToStart();
-                case 6 -> myList.moveToEnd();
-                case 7 -> myList.prev();
-                case 8 -> myList.next();
-                case 9 -> ret = myList.length();
-                case 10 -> ret = myList.currPos();
-                case 11 -> myList.moveToPos(P);
-                case 12 -> {
-                    var that = myList.getValue();
-                    if (that == null) ret = -1;
-                    else ret  = that;
-                }
-                case 13 -> ret = myList.Search(P);
-                default -> System.out.println("Please input a proper choice");
+                    else ret = that;
+                    break;
+                case 5:
+                    myList.moveToStart();
+                    break;
+                case 6:
+                    myList.moveToEnd();
+                    break;
+                case 7:
+                    myList.prev();
+                    break;
+                case 8:
+                    myList.next();
+                    break;
+                case 9:
+                    ret = myList.length();
+                    break;
+                case 10:
+                    ret = myList.currPos();
+                    break;
+                case 11:
+                    myList.moveToPos(P);
+                    break;
+                case 12:
+                    var val = myList.getValue();
+                    if (val == null) ret = -1;
+                    else ret = val;
+                    break;
+                case 13:
+                    ret = myList.Search(P);
+                    break;
+                default:
+                    System.out.println("Please input a proper choice");
+                    break;
             }
             printList(myList);
             System.out.println(ret);
