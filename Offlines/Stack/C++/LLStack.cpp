@@ -10,62 +10,65 @@ private:
     Node* next;
     Node(const Node&) {}
     void operator = (const Node&) {}
-protected:
-    Node() {}
-    Node(T item, Node* next = nullptr) {
-        this->value = item;
+public:
+    Node(T value, Node* next = NULL) {
+        this->value = value;
         this->next = next;
     }
     T getValue() const {
         return value;
     }
-    T* getNext() const {
+    Node* getNext() const {
         return next;
     }
-    void setNext(T* item) {
-        this->next = item;
+    void setNext(Node* next) {
+        this->next = next;
     }
 };
 
 template <typename T> class LLStack : public Stack <T> {
 private:
-    Node* head;
+    Node<T>* head;
     int length;
 public:
     LLStack(int initialSize = 10) {
         length = 0;
-        head = nullptr;
+        head = NULL;
     }
     LLStack(T* list, int direction = 1) {
-
+        
+    }
+    ~LLStack(){
+        clear();
     }
     void clear() {
-        length = 0;
-        while (head != nullptr) {
-            auto temp = top;
-            top = temp->next;
+        while (head != NULL) {
+            auto temp = head;
+            head = head->next;
             delete temp;
         }
+        length = 0;
     }
     void push(const T& item) {
-        auto nxt = new Node<>(item, head);
-        head = nxt;
+        head = new Node<>(item, head);
         length++;
     }
     T pop() {
         assertm(length != 0, "Stack is empty");
-        if (length == 0) return nullptr;
-        auto temp = head;
-        head = temp->getNext();
-        delete
-            return temp->getValue();
+        if (length == 0) return NULL;
+        auto ret = head->getValue();
+        auto nxt = head->getNext();
+        delete head;
+        head = nxt;
+        length--;
+        return ret;
     }
     int length() const {
         return length;
     }
     const T& topValue() const {
         assertm(length != 0, "Stack is empty");
-
+        return head->getValue();
     }
     void setDirection(int direction) {
         assertm(length == 0, "The stack is not empty");
