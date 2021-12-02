@@ -1,8 +1,5 @@
+#pragma once
 #include "Stack.hpp"
-
-#ifndef assertm
-#define assertm(exp, msg) assert(((void)msg, exp))
-#endif
 
 template <typename T> class Node {
 private:
@@ -11,7 +8,7 @@ private:
     Node(const Node&) {}
     void operator = (const Node&) {}
 public:
-    Node(T value, Node* next = NULL) {
+    Node(T value, Node* next = nullptr) {
         this->value = value;
         this->next = next;
     }
@@ -29,48 +26,53 @@ public:
 template <typename T> class LLStack : public Stack <T> {
 private:
     Node<T>* head;
-    int length;
+    int len;
 public:
     LLStack(int initialSize = 10) {
-        length = 0;
-        head = NULL;
+        len = 0;
+        head = nullptr;
     }
     LLStack(T* list, int direction = 1) {
-        
     }
-    ~LLStack(){
+    ~LLStack() {
         clear();
     }
     void clear() {
-        while (head != NULL) {
+        while (head != nullptr) {
             auto temp = head;
-            head = head->next;
+            head = head->getNext();
             delete temp;
         }
-        length = 0;
+        len = 0;
     }
     void push(const T& item) {
-        head = new Node<>(item, head);
-        length++;
+        head = new Node<T>(item, head);
+        len++;
     }
     T pop() {
-        assertm(length != 0, "Stack is empty");
-        if (length == 0) return NULL;
+        if (len == 0) {
+            throw "Empty Stack";
+        }
+        assertm(len != 0, "Stack is empty");
         auto ret = head->getValue();
         auto nxt = head->getNext();
         delete head;
         head = nxt;
-        length--;
+        len--;
         return ret;
     }
     int length() const {
-        return length;
+        return len;
     }
     const T& topValue() const {
-        assertm(length != 0, "Stack is empty");
+        if (len == 0) {
+            throw "Empty Stack";
+        }
+        assertm(len != 0, "Stack is empty");
         return head->getValue();
     }
     void setDirection(int direction) {
-        assertm(length == 0, "The stack is not empty");
+        if (len != 0) return;
+//        assertm(len == 0, "The stack is not empty");
     }
 };
