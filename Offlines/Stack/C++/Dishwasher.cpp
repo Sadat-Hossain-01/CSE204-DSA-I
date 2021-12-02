@@ -7,11 +7,10 @@ using namespace std;
 #define endl "\n"
 
 class Event{
-private:
-    int person_idx;
-    int pushed_time;
-    int course_idx;
     public:
+        int person_idx;
+        int pushed_time;
+        int course_idx;
         Event(int pi=-1, int pt=-1, int ci=-1){
             person_idx = pi;
             pushed_time = pt;
