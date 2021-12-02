@@ -1,6 +1,6 @@
+#include <iostream>
 #include "AStack.hpp"
 #include "LLStack.hpp"
-#include <iostream>
 using namespace std;
 
 #define endl "\n"
@@ -96,5 +96,6 @@ int main()
         if (!didPrint) cout << -1 << endl;
         printStack(*stc);
     }
+    delete stc;
     return 0;
 }
