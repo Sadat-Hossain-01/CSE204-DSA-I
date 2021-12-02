@@ -12,7 +12,7 @@ public:
         this->value = value;
         this->next = next;
     }
-    T getValue() const {
+    const T& getValue() const {
         return value;
     }
     Node* getNext() const {
