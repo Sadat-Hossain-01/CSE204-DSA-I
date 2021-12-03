@@ -78,14 +78,14 @@ int main()
             dirtyStack->push(allEvents[event_idx++]);
         }
 
-        if (!isCleaningOn){
+        if (!isCleaningOn && dirtyStack->length() > 0){
             cout << "Cleaning Started. Time: " << cur_time << endl;
             auto to_clean = dirtyStack->topValue();
             next_finish = cur_time + courseTimes[to_clean.course_idx] - 1;
             isCleaningOn = true;
         }
 
-        if (cur_time == next_finish){
+        if (cur_time == next_finish && dirtyStack->length() > 0){
             auto last = dirtyStack->pop();
             cleanStack->push(last);
             cout << "Cleaning Finished. Time: " << cur_time << endl;
