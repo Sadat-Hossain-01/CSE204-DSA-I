@@ -1,7 +1,7 @@
 #include <iostream>
 #include <climits>
-#include "AStack.hpp"
-#include "LLStack.hpp"
+#include "Arr.hpp"
+#include "LL.hpp"
 using namespace std;
 
 #define endl "\n"
