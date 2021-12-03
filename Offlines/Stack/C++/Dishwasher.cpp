@@ -43,8 +43,8 @@ int main()
         cin >> courseTimes[i];
     }
 
-//    AStack<int> completingPeople;
-    LLStack<int> completingPeople;
+    AStack<int> completingPeople;
+//    LLStack<int> completingPeople;
 
     Event* allEvents = new Event[20];
     int sz = 20;
@@ -79,10 +79,10 @@ int main()
         }
     }
 
-//    AStack<Event> dirtyStack;
-    LLStack<Event> dirtyStack;
-//    AStack<Event> cleanStack;
-    LLStack<Event> cleanStack;
+    AStack<Event> dirtyStack;
+//    LLStack<Event> dirtyStack;
+    AStack<Event> cleanStack;
+//    LLStack<Event> cleanStack;
 
     int cur_time = 0;
     int event_idx = 0;
@@ -123,8 +123,8 @@ int main()
     }
 
     cout << cleanStack.topValue().finish_time << endl;
-//    AStack<int> temp;
-    LLStack<int> temp;
+    AStack<int> temp;
+//    LLStack<int> temp;
     while (cleanStack.length() > 0) {
         temp.push(cleanStack.pop().finish_time);
     }
