@@ -6,16 +6,18 @@ using namespace std;
 
 #define endl "\n"
 
-class Event{
-    public:
-        int person_idx;
-        int pushed_time;
-        int course_idx;
-        Event(int pi=-1, int pt=-1, int ci=-1){
-            person_idx = pi;
-            pushed_time = pt;
-            course_idx = ci;
-        }
+class Event
+{
+public:
+    int person_idx;
+    int pushed_time;
+    int course_idx;
+    Event(int pi=-1, int pt=-1, int ci=-1)
+    {
+        person_idx = pi;
+        pushed_time = pt;
+        course_idx = ci;
+    }
 };
 
 int main()
@@ -24,7 +26,8 @@ int main()
     cin >> invitees >> courses;
     int* courseTimes = new int[courses + 1];
     int* cnt = new int[invitees + 1];
-    for (int i=1; i<=courses; i++){
+    for (int i=1; i<=courses; i++)
+    {
         cin >> courseTimes[i];
     }
 
@@ -37,7 +40,8 @@ int main()
     int event_cnt = 0;
 
     int last_completed_time = -1;
-    while (true){
+    while (true)
+    {
         int friend_index, current_time, course_idx;
         cin >> friend_index >> current_time >> course_idx;
         if (friend_index == 0) break;
@@ -45,13 +49,16 @@ int main()
         Event* latest = new Event(friend_index, current_time, course_idx);
         cnt[friend_index]++;
         if (cnt[friend_index] == courses) completingPeople->push(friend_index);
-        if (len < sz){
+        if (len < sz)
+        {
             allEvents[len++] = *latest;
         }
-        else{
+        else
+        {
             sz *= 2;
             Event* temp = new Event[sz];
-            for (int i=0; i<len; i++){
+            for (int i=0; i<len; i++)
+            {
                 temp[i] = allEvents[i];
             }
             temp[len++] = *latest;
@@ -69,23 +76,30 @@ int main()
     int event_idx = 0;
     int next_finish = -1;
     bool isCleaningOn = false;
-    while (event_idx < event_cnt){
-        int pt = allEvents[event_idx].pushed_time;
-        int ci = allEvents[event_idx].course_idx;
-        int pi = allEvents[event_idx].person_idx;
+    while (cleanStack->length() < event_cnt)
+    {
+        if (event_idx < event_cnt)
+        {
+            int pt = allEvents[event_idx].pushed_time;
+            int ci = allEvents[event_idx].course_idx;
+            int pi = allEvents[event_idx].person_idx;
 
-        if (pt == cur_time){
-            dirtyStack->push(allEvents[event_idx++]);
+            if (pt == cur_time)
+            {
+                dirtyStack->push(allEvents[event_idx++]);
+            }
         }
 
-        if (!isCleaningOn && dirtyStack->length() > 0){
-            cout << "Cleaning Started. Time: " << cur_time << endl;
+        if (!isCleaningOn && dirtyStack->length() > 0)
+        {
             auto to_clean = dirtyStack->topValue();
+            cout << "Cleaning Started. Time: " << cur_time << " Time to finish: " courseTimes[to_clean.course_idx] << " ";
             next_finish = cur_time + courseTimes[to_clean.course_idx] - 1;
             isCleaningOn = true;
         }
 
-        if (cur_time == next_finish && dirtyStack->length() > 0){
+        if (cur_time == next_finish && dirtyStack->length() > 0)
+        {
             auto last = dirtyStack->pop();
             cleanStack->push(last);
             cout << "Cleaning Finished. Time: " << cur_time << endl;
@@ -93,6 +107,8 @@ int main()
         }
         cur_time++;
     }
+
+
 
     delete cleanStack;
     delete dirtyStack;
