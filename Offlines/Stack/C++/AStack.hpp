@@ -25,6 +25,7 @@ public:
         else next = len - 1;
     }
     ~AStack() {
+        clear();
         // delete[] stackList;
     }
     void clear() {
