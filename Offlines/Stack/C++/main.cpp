@@ -33,13 +33,13 @@ template <typename T> void printStackWithAnotherStack(Stack<T>& myStack)
     AStack<T> another;
 //    LLStack<T> another;
 
-    while (myStack.length() > 0){
+    while (myStack.length() > 0) {
         another.push(myStack.pop());
     }
 
     bool isFirst = true;
     cout << "<";
-    while (another.length() > 0){
+    while (another.length() > 0) {
         auto elem = another.pop();
         if (!isFirst) cout << " ";
         else isFirst = false;
@@ -55,7 +55,7 @@ int main()
     LLStack<int> stc;
     int sz;
     cin >> sz;
-    for (int i=0; i<sz; i++){
+    for (int i = 0; i < sz; i++) {
         int x;
         cin >> x;
         stc.push(x);
@@ -82,11 +82,11 @@ int main()
             break;
         case 3:
         {
-            try{
+            try {
                 auto ret = stc.pop();
                 cout << ret << endl;
             }
-            catch(...){
+            catch (...) {
                 cout << "null" << endl;
             }
             didPrint = true;
@@ -101,11 +101,11 @@ int main()
         break;
         case 5:
         {
-            try{
+            try {
                 auto top = stc.topValue();
                 cout << top << endl;
             }
-            catch(...){
+            catch (...) {
                 cout << "null" << endl;
             }
             didPrint = true;

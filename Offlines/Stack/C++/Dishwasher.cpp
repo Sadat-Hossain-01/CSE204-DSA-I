@@ -13,7 +13,7 @@ public:
     int person_idx;
     int pushed_time;
     int course_idx;
-    Event(int pi=-1, int pt=-1, int ci=-1)
+    Event(int pi = -1, int pt = -1, int ci = -1)
     {
         person_idx = pi;
         pushed_time = pt;
@@ -21,9 +21,9 @@ public:
     }
 };
 
-template <typename T> void printCommaSeparatedStack(Stack<T>& stc){
+template <typename T> void printCommaSeparatedStack(Stack<T>& stc) {
     bool isFirst = true;
-    while (stc.length() > 0){
+    while (stc.length() > 0) {
         if (!isFirst) cout << ",";
         else isFirst = false;
         cout << stc.pop();
@@ -37,7 +37,7 @@ int main()
     cin >> invitees >> courses;
     int* courseTimes = new int[courses + 1];
     int* cnt = new int[invitees + 1];
-    for (int i=1; i<=courses; i++)
+    for (int i = 1; i <= courses; i++)
     {
         cin >> courseTimes[i];
     }
@@ -68,7 +68,7 @@ int main()
         {
             sz *= 2;
             Event* tempArr = new Event[sz];
-            for (int i=0; i<len; i++)
+            for (int i = 0; i < len; i++)
             {
                 tempArr[i] = allEvents[i];
             }
@@ -126,7 +126,7 @@ int main()
     cout << completeTimes.topValue() << endl;
     AStack<int> temp;
 //    LLStack<int> temp;
-    while (completeTimes.length() > 0){
+    while (completeTimes.length() > 0) {
         temp.push(completeTimes.pop());
     }
     printCommaSeparatedStack(temp);

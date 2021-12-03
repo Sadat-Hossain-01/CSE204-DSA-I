@@ -17,10 +17,11 @@ public:
         next = len = 0;
     }
     //C++ requires the length parameter additionally with the array itself, hence the extra parameter
-    AStack(int length, T* list, int direction = 1) {
+    AStack(int length, int size, T* list, int direction = 1) {
         stackList = list;
         this->direction = direction;
         len = length;
+        maxSize = size;
         if (direction == 1) next = 0;
         else next = len - 1;
     }

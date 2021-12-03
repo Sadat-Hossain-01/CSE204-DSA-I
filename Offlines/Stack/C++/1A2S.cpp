@@ -80,8 +80,8 @@ int main()
 
     Event* arrToPass = new Event[invitees * courses];
 
-    AStack<Event> dirtyStack(0, arrToPass, 1);
-    AStack<Event> cleanStack(0, arrToPass, -1);
+    AStack<Event> dirtyStack(0, invitees * courses, arrToPass, 1);
+    AStack<Event> cleanStack(0, invitees * courses, arrToPass, -1);
     AStack<int> completeTimes;
 //    LLStack<int> completeTimes;
 
