@@ -13,11 +13,13 @@ public:
     int person_idx;
     int pushed_time;
     int course_idx;
-    Event(int pi = -1, int pt = -1, int ci = -1)
+    int finish_time;
+    Event(int pi = -1, int pt = -1, int ci = -1, int ft = -1)
     {
         person_idx = pi;
         pushed_time = pt;
         course_idx = ci;
+        finish_time = ft;
     }
 };
 
@@ -82,8 +84,6 @@ int main()
 
     AStack<Event> dirtyStack(0, invitees * courses, arrToPass, 1);
     AStack<Event> cleanStack(0, invitees * courses, arrToPass, -1);
-    AStack<int> completeTimes;
-//    LLStack<int> completeTimes;
 
     int cur_time = 0;
     int event_idx = 0;
@@ -105,16 +105,16 @@ int main()
         if (!isCleaningOn && dirtyStack.length() > 0)
         {
             auto to_clean = dirtyStack.pop();
+            next_finish = cur_time + courseTimes[to_clean.course_idx] - 1;
+            to_clean.finish_time = next_finish;
             cleanStack.push(to_clean);
             cout << "Time: " << cur_time << " Cleaning Started." << " " << to_clean.person_idx << " " << to_clean.pushed_time << " " << to_clean.course_idx << " ";
-            next_finish = cur_time + courseTimes[to_clean.course_idx] - 1;
             isCleaningOn = true;
         }
 
         if (isCleaningOn && cur_time == next_finish)
         {
             cout << "Cleaning Finished. Time: " << cur_time << endl;
-            completeTimes.push(cur_time);
             cleaned++;
             isCleaningOn = false;
         }
@@ -123,17 +123,17 @@ int main()
         else cur_time = min_val;
     }
 
-    cout << completeTimes.topValue() << endl;
+    cout << cleanStack.topValue().finish_time << endl;
     AStack<int> temp;
 //    LLStack<int> temp;
-    while (completeTimes.length() > 0) {
-        temp.push(completeTimes.pop());
+    while (cleanStack.length() > 0) {
+        temp.push(cleanStack.pop().finish_time);
     }
     printCommaSeparatedStack(temp);
     cout << endl << (completingPeople.length() == invitees ? "Y" : "N") << endl;
     printCommaSeparatedStack(completingPeople);
 
-    delete[] arrToPass;
+//    delete[] arrToPass;
     delete[] allEvents;
     delete[] cnt;
     delete[] courseTimes;

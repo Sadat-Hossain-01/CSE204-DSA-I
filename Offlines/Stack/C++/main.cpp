@@ -51,8 +51,8 @@ template <typename T> void printStackWithAnotherStack(Stack<T>& myStack)
 
 int main()
 {
-//    AStack<int> stc;
-    LLStack<int> stc;
+    AStack<int> stc;
+//    LLStack<int> stc;
     int sz;
     cin >> sz;
     for (int i = 0; i < sz; i++) {

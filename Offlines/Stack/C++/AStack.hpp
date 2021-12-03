@@ -14,7 +14,8 @@ public:
     AStack(int initialSize = defaultSize) {
         stackList = new T[initialSize];
         maxSize = initialSize;
-        next = len = 0;
+        next = 0;
+        len = 0;
     }
     //C++ requires the length parameter additionally with the array itself, hence the extra parameter
     AStack(int length, int size, T* list, int direction = 1) {
@@ -37,7 +38,7 @@ public:
     void push(const T& item) {
         if (direction == 1) {
             if (len < maxSize) {
-                stackList[len++] = item;
+                stackList[next] = item;
             }
             else {
                 maxSize *= 2;
@@ -45,16 +46,16 @@ public:
                 for (int i = 0; i < len; i++) {
                     tempList[i] = stackList[i];
                 }
-                tempList[len++] = item;
+                tempList[len] = item;
                 delete[] stackList;
                 stackList = tempList;
             }
             next++;
+            len++;
         }
         else {
             if (len < maxSize) {
                 stackList[next] = item;
-                len++;
                 next--;
             }
             else {
@@ -66,10 +67,10 @@ public:
                 }
                 tempList[val - 1] = item;
                 next = val - 2;
-                len++;
                 delete[] stackList;
                 stackList = tempList;
             }
+            len++;
         }
     }
     T pop() {
@@ -77,14 +78,9 @@ public:
             throw "Empty Stack";
         }
         assertm(len != 0, "Stack is empty");
-        if (direction == 1) {
-            next--;
-            return stackList[len-- - 1];
-        }
-        else {
-            return stackList[next++ + 1];
-            len--;
-        }
+        len--;
+        if (direction == 1) return stackList[--next];
+        else return stackList[++next];
     }
     int length() const {
         return len;
@@ -94,7 +90,7 @@ public:
             throw "Empty Stack";
         }
         assertm(len != 0, "Stack is empty");
-        if (direction == 1) return stackList[len - 1];
+        if (direction == 1) return stackList[next - 1];
         else return stackList[next + 1];
     }
     void setDirection(int direction) {
