@@ -30,7 +30,7 @@ public:
     }
     void clear() {
         len = 0;
-        if (direction = 1) next = 0;
+        if (direction == 1) next = 0;
         else next = len - 1;
     }
     void push(const T& item) {

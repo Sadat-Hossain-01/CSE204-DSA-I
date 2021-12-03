@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <climits>
 #include "AStack.hpp"
 #include "LLStack.hpp"
 using namespace std;
