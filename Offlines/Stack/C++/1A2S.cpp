@@ -22,11 +22,16 @@ public:
     }
 };
 
-template <typename T> void printCommaSeparatedStack(Stack<T>& stc) {
+template <typename T>
+void printCommaSeparatedStack(Stack<T> &stc)
+{
     bool isFirst = true;
-    while (stc.length() > 0) {
-        if (!isFirst) cout << ",";
-        else isFirst = false;
+    while (stc.length() > 0)
+    {
+        if (!isFirst)
+            cout << ",";
+        else
+            isFirst = false;
         cout << stc.pop();
     }
     return;
@@ -36,17 +41,17 @@ int main()
 {
     int invitees, courses;
     cin >> invitees >> courses;
-    int* courseTimes = new int[courses + 1];
-    int* cnt = new int[invitees + 1];
+    int *courseTimes = new int[courses + 1];
+    int *cnt = new int[invitees + 1];
     for (int i = 1; i <= courses; i++)
     {
         cin >> courseTimes[i];
     }
 
     AStack<int> completingPeople;
-//    LLStack<int> completingPeople;
+    //    LLStack<int> completingPeople;
 
-    Event* allEvents = new Event[20];
+    Event *allEvents = new Event[20];
     int sz = 20;
     int len = 0;
     int dish_count = 0;
@@ -56,11 +61,13 @@ int main()
     {
         int friend_index, current_time, course_idx;
         cin >> friend_index >> current_time >> course_idx;
-        if (friend_index == 0) break;
+        if (friend_index == 0)
+            break;
         dish_count++;
         Event latest(friend_index, current_time, course_idx);
         cnt[friend_index]++;
-        if (cnt[friend_index] == courses) completingPeople.push(friend_index);
+        if (cnt[friend_index] == courses)
+            completingPeople.push(friend_index);
         if (len < sz)
         {
             allEvents[len++] = latest;
@@ -68,7 +75,7 @@ int main()
         else
         {
             sz *= 2;
-            Event* tempArr = new Event[sz];
+            Event *tempArr = new Event[sz];
             for (int i = 0; i < len; i++)
             {
                 tempArr[i] = allEvents[i];
@@ -79,7 +86,7 @@ int main()
         }
     }
 
-    Event* arrToPass = new Event[invitees * courses];
+    Event *arrToPass = new Event[invitees * courses];
 
     AStack<Event> dirtyStack(0, invitees * courses, arrToPass, 1);
     AStack<Event> cleanStack(0, invitees * courses, arrToPass, -1);
@@ -107,7 +114,8 @@ int main()
             next_finish = cur_time + courseTimes[to_clean.course_idx] - 1;
             to_clean.finish_time = next_finish;
             cleanStack.push(to_clean);
-            cout << "Time: " << cur_time << " Cleaning Started." << " " << to_clean.person_idx << " " << to_clean.pushed_time << " " << to_clean.course_idx << " ";
+            cout << "Time: " << cur_time << " Cleaning Started."
+                 << " " << to_clean.person_idx << " " << to_clean.pushed_time << " " << to_clean.course_idx << " ";
             isCleaningOn = true;
         }
 
@@ -118,21 +126,25 @@ int main()
             isCleaningOn = false;
         }
         auto min_val = min(next_finish, (event_idx < dish_count ? allEvents[event_idx].pushed_time : INT_MAX));
-        if (min_val <= cur_time) cur_time++;
-        else cur_time = min_val;
+        if (min_val <= cur_time)
+            cur_time++;
+        else
+            cur_time = min_val;
     }
 
     cout << cleanStack.topValue().finish_time << endl;
     AStack<int> temp;
-//    LLStack<int> temp;
-    while (cleanStack.length() > 0) {
+    //    LLStack<int> temp;
+    while (cleanStack.length() > 0)
+    {
         temp.push(cleanStack.pop().finish_time);
     }
     printCommaSeparatedStack(temp);
-    cout << endl << (completingPeople.length() == invitees ? "Y" : "N") << endl;
+    cout << endl
+         << (completingPeople.length() == invitees ? "Y" : "N") << endl;
     printCommaSeparatedStack(completingPeople);
 
-//    delete[] arrToPass;
+    //    delete[] arrToPass;
     delete[] allEvents;
     delete[] cnt;
     delete[] courseTimes;
