@@ -4,7 +4,28 @@
 
 using namespace std;
 
-#define endl "/n"
+#define endl "\n"
+
+template <typename T>
+void printQueue(Queue<T>& q) {
+  AQueue<T> another;
+  while (q.length() > 0) {
+    auto ret = q.dequeue();
+    another.enqueue(ret);
+  }
+  bool isFirst = true;
+  cout << "<";
+  while (another.length() > 0) {
+    if (!isFirst)
+      cout << ", ";
+    else
+      isFirst = false;
+    auto now = another.dequeue();
+    cout << now;
+    q.enqueue(now);
+  }
+  cout << ">" << endl;
+}
 
 int main() {
   AQueue<int> myQueue;
@@ -15,10 +36,13 @@ int main() {
     cin >> x;
     myQueue.enqueue(x);
   }
+  printQueue(myQueue);
   while (true) {
     int op, param;
     cin >> op >> param;
-    if (op == 1) {
+    if (op == 0)
+      break;
+    else if (op == 1) {
       myQueue.clear();
       cout << -1 << endl;
     } else if (op == 2) {
@@ -50,6 +74,8 @@ int main() {
       } catch (...) {
         cout << "null" << endl;
       }
-    }
+    } else
+      continue;
+    printQueue(myQueue);
   }
 }

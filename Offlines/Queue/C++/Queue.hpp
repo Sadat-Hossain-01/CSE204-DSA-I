@@ -3,7 +3,7 @@
 #include <cstdlib>
 #define assertm(exp, msg) assert(((void)msg, exp))
 
-template <typename E>
+template <typename T>
 class Queue {
  private:
   Queue(const Queue& q) {}
@@ -20,23 +20,3 @@ class Queue {
   virtual const T& rearValue() const = 0;
   virtual T leaveQueue() = 0;
 };
-
-template <typename T>
-void printQueue(Queue<T> q) {
-  AQueue<T> another;
-  while (q.length() > 0) {
-    another.enqueue(q.dequeue);
-  }
-  bool isFirst = true;
-  cout << "<";
-  while (another.length() > 0) {
-    if (!isFirst)
-      cout << ", ";
-    else
-      isFirst = false;
-    auto now = another.dequeue();
-    cout << now;
-    q.enqueue(now);
-  }
-  cout << ">" << endl;
-}
