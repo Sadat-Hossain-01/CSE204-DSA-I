@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Arr.hpp"
+#include "LL.hpp"
 
 using namespace std;
 
@@ -8,7 +9,8 @@ using namespace std;
 
 template <typename T>
 void printQueue(Queue<T>& q) {
-  AQueue<T> another;
+  // AQueue<T> another;
+  LLQueue<T> another;
   while (q.length() > 0) {
     auto ret = q.dequeue();
     another.enqueue(ret);
@@ -28,7 +30,8 @@ void printQueue(Queue<T>& q) {
 }
 
 int main() {
-  AQueue<int> myQueue;
+  // AQueue<int> myQueue;
+  LLQueue<int> myQueue;
   int n;
   cin >> n;
   while (n--) {
