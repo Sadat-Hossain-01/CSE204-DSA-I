@@ -7,7 +7,7 @@ using namespace std;
 
 #define endl "\n"
 
-const bool isCommentOn = true;
+const bool isCommentOn = false;
 int current_time, idx, done;
 int* enter_time;
 int* service_time;
