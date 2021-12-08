@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
-
 #include "Queue.hpp"
-const int defaultSize = 5;
+
+const int defaultSize = 15;
 
 template <typename T>
 class AQueue : public Queue<T> {
@@ -36,18 +35,16 @@ class AQueue : public Queue<T> {
       rear = (rear + 1 + size) % size;
       queueList[rear] = item;
     } else {
-      T* anotherList = new T[2 * size + 1];
+      T* anotherList = new T[2 * size - 1];
       for (int i = 0, idx = front; i < len; i++) {
         anotherList[i] = queueList[idx];
-        std::cout << "Copied " << queueList[idx] << " from prev_idx " << idx
-                  << " to new_idx " << i << "\n";
         rear = i;
         idx++;
         if (idx == size) idx = 0;
       }
       front = 0;  // new front will be 0
-      anotherList[rear++] = item;
-      size = size * 2 + 1;
+      anotherList[++rear] = item;
+      size = size * 2 - 1;
       delete[] queueList;
       queueList = anotherList;
     }
@@ -76,7 +73,7 @@ class AQueue : public Queue<T> {
     if (len == 0) throw "Empty Queue";
     assertm(len != 0, "Empty Queue");
     auto ret = queueList[rear];
-    rear = (rear - 1) % size;
+    rear = (rear - 1 + size) % size;
     len--;
     return ret;
   }
