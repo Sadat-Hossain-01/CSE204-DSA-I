@@ -8,6 +8,7 @@ using namespace std;
 #define endl "\n"
 
 const bool isCommentOn = true;
+int current_time, idx, done;
 
 class Event;
 
@@ -27,6 +28,16 @@ class Event {
   }
 };
 
+void startService(Queue<Event>& q, int& next_finish, bool& isOn) {
+  int id = q.frontValue().index;
+  next_finish = current_time + service_time[id];
+  isOn = true;
+  if (isCommentOn) {
+    cout << "Time " << current_time << ": Person " << id + 1
+         << " has started taking service in queue 1" << endl;
+  }
+}
+
 int main() {
   int n;
   cin >> n;
@@ -41,23 +52,26 @@ int main() {
   //   LLQueue<Event> q1;
   AQueue<Event> q2;
   //   LLQueue<Event> q1;
-  int current_time = 0, idx = 0, q1_next = -1, q2_next = -1, done = 0;
+  int q1_next = -1, q2_next = -1;
   int q1_last_time = -1, q2_last_time = -1;
   bool q1_on = false, q2_on = false;
 
   while (done < n) {
     if (idx < n) {
       if (current_time == enter_time[idx]) {
-        Event e(idx++);
-        if (q1.length() < q2.length()) {
+        Event e(idx);
+        if (q1.length() <= q2.length()) {
           q1.enqueue(e);
           if (isCommentOn)
-            cout << "Person " << idx + 1 << " entered queue 1" << endl;
+            cout << "Time " << current_time << ": Person " << idx + 1
+                 << " has entered queue 1" << endl;
         } else {
           q2.enqueue(e.toggle());
           if (isCommentOn)
-            cout << "Person " << idx + 1 << " entered queue 2" << endl;
+            cout << "Time " << current_time << ": Person " << idx + 1
+                 << " has entered queue 2" << endl;
         }
+        idx++;
       }
     }
 
@@ -66,9 +80,8 @@ int main() {
       q1_next = current_time + service_time[id];
       q1_on = true;
       if (isCommentOn) {
-        cout << "Person " << id + 1
-             << " has started taking service in queue 1 at time "
-             << current_time << endl;
+        cout << "Time " << current_time << ": Person " << id + 1
+             << " has started taking service in queue 1" << endl;
       }
     }
 
@@ -77,17 +90,16 @@ int main() {
       q2_next = current_time + service_time[id];
       q2_on = true;
       if (isCommentOn) {
-        cout << "Person " << id + 1
-             << " has started taking service in queue 2 at time "
-             << current_time << endl;
+        cout << "Time " << current_time << ": Person " << id + 1
+             << " has started taking service in queue 2" << endl;
       }
     }
 
     if (q1_on && current_time == q1_next) {
-      int id = q1.frontValue().index;
+      int id = q1.dequeue().index;
       if (isCommentOn) {
-        cout << "Person " << id + 1 << " has finished at time " << current_time
-             << endl;
+        cout << "Time " << current_time << ": Person " << id + 1
+             << " has finished from queue 1" << endl;
       }
       done++;
       q1_last_time = current_time;
@@ -97,17 +109,17 @@ int main() {
       while (q2.length() - q1.length() >= 2) {
         auto leave = q2.leaveQueue();
         if (isCommentOn)
-          cout << "Person " << leave.index + 1 << " has switched to queue " << 1
-               << endl;
-        q1.enqueue(leave);
+          cout << "Time " << current_time << ": Person " << leave.index + 1
+               << " has switched to queue " << 1 << endl;
+        q1.enqueue(leave.toggle());
       }
     }
 
     if (q2_on && current_time == q2_next) {
-      int id = q2.frontValue().index;
+      int id = q2.dequeue().index;
       if (isCommentOn) {
-        cout << "Person " << id + 1 << " has finished at time " << current_time
-             << endl;
+        cout << "Time " << current_time << ": Person " << id + 1
+             << " has finished from queue 2" << endl;
       }
       done++;
       q2_last_time = current_time;
@@ -117,11 +129,17 @@ int main() {
       while (q1.length() - q2.length() >= 2) {
         auto leave = q1.leaveQueue();
         if (isCommentOn)
-          cout << "Person " << leave.index + 1 << " has switched to queue " << 2
-               << endl;
-        q2.enqueue(leave);
+          cout << "Time " << current_time << ": Person " << leave.index + 1
+               << " has switched to queue " << 2 << endl;
+        q2.enqueue(leave.toggle());
       }
     }
+    int min_val =
+        min(min(q1_next, q2_next), (idx < n ? enter_time[idx] : INT_MAX));
+    if (min_val > current_time)
+      current_time = min_val;
+    else
+      current_time++;
   }
 
   cout << "Booth 1 finishes service at t=" << q1_last_time << endl;
