@@ -123,4 +123,6 @@ int main() {
 
   delete[] service_time;
   delete[] enter_time;
+
+  return 0;
 }
