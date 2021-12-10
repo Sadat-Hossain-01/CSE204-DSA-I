@@ -80,22 +80,21 @@ int main() {
   bool q1_on = false, q2_on = false;
 
   while (done < n) {
-    if (idx < n) {
-      if (current_time == enter_time[idx]) {
-        Event e(idx);
-        if (q1.length() <= q2.length()) {
-          q1.enqueue(e);
-          if (isCommentOn)
-            cout << "Time " << current_time << ": Person " << idx + 1
-                 << " has entered queue 1" << endl;
-        } else {
-          q2.enqueue(e.toggle());
-          if (isCommentOn)
-            cout << "Time " << current_time << ": Person " << idx + 1
-                 << " has entered queue 2" << endl;
-        }
-        idx++;
+    // while loop for checking non-decreasing inputs
+    while (idx < n && current_time == enter_time[idx]) {
+      Event e(idx);
+      if (q1.length() <= q2.length()) {
+        q1.enqueue(e);
+        if (isCommentOn)
+          cout << "Time " << current_time << ": Person " << idx + 1
+               << " has entered queue 1" << endl;
+      } else {
+        q2.enqueue(e.toggle());
+        if (isCommentOn)
+          cout << "Time " << current_time << ": Person " << idx + 1
+               << " has entered queue 2" << endl;
       }
+      idx++;
     }
 
     if (!q1_on && q1.length() > 0) startService(q1, q1_next, q1_on, 1);
