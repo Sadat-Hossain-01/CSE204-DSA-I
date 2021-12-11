@@ -1,104 +1,54 @@
-#pragma once
-
 #include <cstdlib>
 
-#include "BSTNode.hpp"
-
-template <typname E, typename T>
-class BST {
+template <typename T>
+class BSTNode {
  private:
-  BSTNode<E, T>* root;
-  int nodeCount;
-
-  // private helper functions for maintaining recursive procedure
-  BSTNode<E, T>* insertHelp(BSTNode<E, T>* node, const E& key, const T& value);
-  BSTNode<E, T>* deleteHelp(BSTNode<E, T>* node, const E& key);
-  BSTNode<E, T>* findHelp(BSTNode<E, T>* node, const E& key) const;
-  BSTNode<E, T>* getMin(BSTNode<E, T>* node) const;
-  void printHelp(BSTNode<E, T>* node, int level) const;
-  void clearHelp(BSTNode<E, T>* node);  // for destructor
+  BSTNode *left, right;
+  T element;
 
  public:
-  BST() {
-    root = nullptr;
-    nodeCount = 0;
+  BSTNode() { left = right = nullptr; }
+  BSTNode(const T& element, BSTNode* left = nullptr, BSTNode* right = nullptr) {
+    this->element = element;
+    this->left = left;
+    this->right = right;
   }
-  ~BST() {
-    clearHelp(root);
-    root = nullptr;
-    nodeCount = 0;
-  }
-  void insert(const E& key, const T& value) {
-    root = insertHelp(root, key, value);
-    nodeCount++;
-  }
+  inline T getElement() const { return element; }
+  inline BSTNode* getLeft() const { return left; }
+  inline BSTNode* getRight() const { return right; }
+  inline void setElement(const T& element) { this->element = element; }
+  inline void setLeft(BSTNode* left) { this->left = left; }
+  inline void setRight(BSTNode* right) { this->right = right; }
 };
 
-template <typename E, typename T>
-BSTNode<E, T>* BST<E, T>::findHelp(BSTNode<E, T>* node, const E& key) const {
-  if (node == null) return nullptr;
-  auto node_key = node->getKey();
-  if (key < node_key)
-    return findHelp(node->getLeft(), key);
-  else if (key > node_key)
-    return findHelp(node->getRight(), key);
-  else
-    return node->getValue();
+template <typename T>
+class BST {
+ private:
+  BSTNode* root;
+  // private functions for recursive procedure
+  BST* insertHelp(BST* node, const T& element);
+  BST* deleteHelp(BST* node, const T& element);
+  BST* findHelp(BST* node, const T& element);
+
+ public:
+  void insert(const T& element) {}
+  void delete (const T& element) {}
+  bool find(const T& element) const {}
+};
+
+template <typename T>
+BST<T>::BST* insertHelp(BST* node, const T& element) {
+  // got an empty subtree, so create the node
+  if (node == nullptr) return new BSTNode(element, nullptr, nullptr);
+  auto elem = node->getKey();
+  if (elem < element)
+    node->setLeft(insertHelp(node->getLeft(), element);
+  else if (elem > element) 
+    node->setRight(insertHelp(node->getRight(), elem));
 }
 
-template <typename E, typename T>
-BSTNode<E, T>* BST<E, T>::insertHelp(BSTNode<E, T>* node, const E& key,
-                                     const T& value) {
-  // got an empty tree, so create the node
-  if (node == nullptr) return new BSTNode<E, T>(key, value, nullptr, nullptr);
-  auto node_key = node->getKey();
-  if (key < node_key)
-    node->setLeft(insertHelp(node->getLeft(), key, value));
-  else
-    node->setRight(insertHelp(node->getRight(), key, value));
-  return node;
-}
+template <typename T>
+BST<T>::BST* deleteHelp(BST* node, const T& element) {}
 
-template <typename E, typename T>
-BSTNode<E, T>* BST<E, T>::getMin(BSTNode<E, T>* node) const {
-  if (node->getLeft() == nullptr)
-    return node;
-  else
-    return getMin(node->getLeft());
-}
-
-template <typename E, typename T>
-BSTNode<E, T>* BST<E, T>::deleteMin(BSTNode<E, T>* node) {
-  if (node->getLeft() == nullptr)
-    return node->getRight();
-  else {
-    node->setLeft(deleteMin(deleteMin(node->getLeft())));
-    return node;
-  }
-}
-
-template <typename E, typename T>
-BSTNode<E, T>* BST<E, T>::deleteHelp(BSTNode<E, T>* node, const E& key) {
-  if (node == nullptr) return nullptr;
-  auto node_key = node->getKey();
-  if (key < node_key)
-    node->setLeft(deleteHelp(node->getLeft(), key));
-  else if (key > node_key)
-    node->setRight(deleteHelp(node->getRight(), key));
-  else {  // found the desired key
-    BSTNode<E, T>* temp = node;
-    if (node->getRight() == nullptr) {  // only a left child
-      node = node->getLeft();
-      delete temp;
-    } else if (node->getLeft() == nullptr) {  // only a right child
-      node = node->getRight();
-      delete temp;
-    } else {  // Both children are non-empty
-      BSTNode<E, T>* temp = getMin(node->getRight());
-      node->setValue(temp->getValue());
-      node->setKey(temp->getKey());
-      node->setRight(deleteMin(node->getRight()));
-      delete temp;
-    }
-  }
-}
+template <typename T>
+BST<T>::BST* findHelp(BST* node, const T& element) {}
