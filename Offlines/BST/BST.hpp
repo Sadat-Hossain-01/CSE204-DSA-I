@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
+#define assertm(exp, msg) assert(((void)msg, exp))
 
 template <typename T>
 class BSTNode {
@@ -28,13 +30,16 @@ class BSTNode {
 template <typename T>
 class BST {
  private:
+  int nodeCount;
   BSTNode<T> *root;
   // private functions for recursive procedure
   BSTNode<T> *getMin(BSTNode<T> *node) const;
+  BSTNode<T> *getMax(BSTNode<T> *node) const;
   BSTNode<T> *deleteMin(BSTNode<T> *node);
+  BSTNode<T> *deleteMax(BSTNode<T> *node);
   BSTNode<T> *insertHelp(BSTNode<T> *node, const T &element);
   BSTNode<T> *removeHelp(BSTNode<T> *node, const T &element);
-  const T &findHelp(BSTNode<T> *node, const T &element) const;
+  bool findHelp(BSTNode<T> *node, const T &element) const;
   void InTraverseHelp(BSTNode<T> *node) const;
   void PreTraverseHelp(BSTNode<T> *node) const;
   void PostTraverseHelp(BSTNode<T> *node) const;
@@ -42,26 +47,46 @@ class BST {
 
  public:
   enum Type { In, Pre, Post };
-  void insert(const T &element) { root = insertHelp(root, element); }
-  void remove(const T &element) { root = removeHelp(root, element); }
+  BST() {
+    nodeCount = 0;
+    root = new BSTNode<T>();
+  }
+  void insert(const T &element) {
+    if (nodeCount == 0)
+      root->setElement(element);
+    else
+      root = insertHelp(root, element);
+    nodeCount++;
+  }
+  void remove(const T &element) {
+    int prev_count = nodeCount;
+    if (nodeCount > 0) root = removeHelp(root, element);
+    if (prev_count == nodeCount) std::cout << "Invalid Operation\n";
+  }
   bool find(const T &element) const {
-    auto ret = findHelp(root, element);
-    return (ret == element);
+    if (nodeCount == 0) return false;
+    return findHelp(root, element);
   }
   void traversal(Type type) {
-    if (type == In)
-      InTraverseHelp(root);
-    else if (type == Pre)
-      PreTraverseHelp(root);
-    else if (type == Post)
-      PostTraverseHelp(root);
+    if (nodeCount > 0) {
+      if (type == In)
+        InTraverseHelp(root);
+      else if (type == Pre)
+        PreTraverseHelp(root);
+      else if (type == Post)
+        PostTraverseHelp(root);
+    }
     std::cout << "\n";
   }
-  void print() { printHelp(root, 0); }
+  void print() {
+    if (nodeCount > 0) printHelp(root, 0);
+    std::cout << "\n";
+  }
 };
 
 template <typename T>
 BSTNode<T> *BST<T>::getMin(BSTNode<T> *node) const {
+  assertm(node != nullptr, "Null pointer exception in getMin()");
   if (node->getLeft() == nullptr)
     return node;
   else
@@ -69,11 +94,32 @@ BSTNode<T> *BST<T>::getMin(BSTNode<T> *node) const {
 }
 
 template <typename T>
+BSTNode<T> *BST<T>::getMax(BSTNode<T> *node) const {
+  assertm(node != nullptr, "Null pointer exception in getMax()");
+  if (node->getRight() == nullptr)
+    return node;
+  else
+    return getMax(node->getRight());
+}
+
+template <typename T>
 BSTNode<T> *BST<T>::deleteMin(BSTNode<T> *node) {
+  assertm(node != nullptr, "Null pointer exception in deleteMin()");
   if (node->getLeft() == nullptr)
     return node->getRight();
   else {
-    node->setLeft(deleteMin(deleteMin(node->getLeft())));
+    node->setLeft(deleteMin(node->getLeft()));
+    return node;
+  }
+}
+
+template <typename T>
+BSTNode<T> *BST<T>::deleteMax(BSTNode<T> *node) {
+  assertm(node != nullptr, "Null pointer exception in deleteMax()");
+  if (node->getRight() == nullptr)
+    return node->getLeft();
+  else {
+    node->setRight(deleteMax(node->getRight()));
     return node;
   }
 }
@@ -81,11 +127,14 @@ BSTNode<T> *BST<T>::deleteMin(BSTNode<T> *node) {
 template <typename T>
 BSTNode<T> *BST<T>::insertHelp(BSTNode<T> *node, const T &element) {
   // got an empty subtree, so create the node
-  if (node == nullptr) return new BSTNode<T>(element, nullptr, nullptr);
+  if (node == nullptr) {
+    nodeCount++;
+    return new BSTNode<T>(element, nullptr, nullptr);
+  }
   auto elem = node->getElement();
-  if (elem < element)
+  if (element < elem)
     node->setLeft(insertHelp(node->getLeft(), element));
-  else if (elem > element)
+  else if (element >= elem)
     node->setRight(insertHelp(node->getRight(), element));
   return node;
 }
@@ -97,7 +146,7 @@ BSTNode<T> *BST<T>::removeHelp(BSTNode<T> *node, const T &element) {
   if (element < elem)
     node->setLeft(removeHelp(node->getLeft(), element));
   else if (element > elem)
-    node->setLeft(removeHelp(node->getRight(), element));
+    node->setRight(removeHelp(node->getRight(), element));
   else {  // find the desired key
     BSTNode<T> *temp = node;
     if (node->getRight() == nullptr) {  // has only left child
@@ -107,25 +156,26 @@ BSTNode<T> *BST<T>::removeHelp(BSTNode<T> *node, const T &element) {
       node = node->getRight();
       delete temp;
     } else {  // both non-empty children
-      BSTNode<T> *temp = getMin(node->getRight());
-      node->setElement(node->getElement());
-      node->setRight(deleteMin(node->getRight()));
+      BSTNode<T> *temp = getMax(node->getLeft());
+      node->setElement(temp->getElement());
+      node->setLeft(deleteMax(node->getLeft()));
       delete temp;
     }
+    nodeCount--;
   }
   return node;
 }
 
 template <typename T>
-const T &BST<T>::findHelp(BSTNode<T> *node, const T &element) const {
-  if (node == nullptr) return NULL;
+bool BST<T>::findHelp(BSTNode<T> *node, const T &element) const {
+  if (node == nullptr) return false;
   auto elem = node->getElement();
   if (element < elem)
     return findHelp(node->getLeft(), element);
   else if (element > elem)
     return findHelp(node->getRight(), element);
   else
-    return node->getElement();
+    return true;
 }
 
 template <typename T>
@@ -155,7 +205,9 @@ void BST<T>::PostTraverseHelp(BSTNode<T> *node) const {
 template <typename T>
 void BST<T>::printHelp(BSTNode<T> *node, int level) const {
   if (node == nullptr) return;
-  std::cout << node->getElement() << "(";
+  std::cout << node->getElement();
+  if (node->getLeft() == nullptr && node->getRight() == nullptr) return;
+  std::cout << "(";
   printHelp(node->getLeft(), level + 1);
   std::cout << ")(";
   printHelp(node->getRight(), level + 1);

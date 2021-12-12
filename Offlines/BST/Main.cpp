@@ -7,7 +7,7 @@ using namespace std;
 
 #define endl "\n"
 
-const bool isCommentOn = true;
+const bool isCommentOn = false;
 
 int main() {
   BST<int> tr;
