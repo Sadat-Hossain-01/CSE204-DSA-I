@@ -61,7 +61,7 @@ class BST {
   void remove(const T &element) {
     int prev_count = nodeCount;
     if (nodeCount > 0) root = removeHelp(root, element);
-    if (prev_count == nodeCount) std::cout << "Invalid Operation\n";
+    if (prev_count == nodeCount) throw "Invalid Operation";
   }
   bool find(const T &element) const {
     if (nodeCount == 0) return false;

@@ -10,38 +10,53 @@ using namespace std;
 const bool isCommentOn = false;
 
 int main() {
-  BST<int> tr;
-  while (true) {
+  BST<int> myTree;
+  fstream newFile;
+  newFile.open("input.txt", ios::in);
+  if (!newFile.is_open()) {
+    cout << "Error in opening file" << endl;
+    newFile.close();
+    exit(0);
+  }
+
+  while (!newFile.eof()) {
     char op;
-    cin >> op;
+    newFile >> op;
     if (isCommentOn) cout << "Operation: " << op;
     if (op == 'F') {
       int elem;
-      cin >> elem;
+      newFile >> elem;
       if (isCommentOn) cout << " " << elem << endl;
-      cout << (tr.find(elem) ? "True" : "False") << endl;
+      cout << (myTree.find(elem) ? "True" : "False") << endl;
     } else if (op == 'I') {
       int elem;
-      cin >> elem;
+      newFile >> elem;
       if (isCommentOn) cout << " " << elem << endl;
-      tr.insert(elem);
-      tr.print();
+      myTree.insert(elem);
+      myTree.print();
     } else if (op == 'D') {
       int elem;
-      cin >> elem;
+      newFile >> elem;
       if (isCommentOn) cout << " " << elem << endl;
-      tr.remove(elem);
-      tr.print();
+      try {
+        myTree.remove(elem);
+        myTree.print();
+      } catch (...) {
+        cout << "Invalid Operation" << endl;
+      }
     } else if (op == 'T') {
       string type;
-      cin >> type;
+      newFile >> type;
       if (isCommentOn) cout << " " << type << endl;
       if (type == "In")
-        tr.traversal(tr.In);
+        myTree.traversal(myTree.In);
       else if (type == "Pre")
-        tr.traversal(tr.Pre);
+        myTree.traversal(myTree.Pre);
       else if (type == "Post")
-        tr.traversal(tr.Post);
+        myTree.traversal(myTree.Post);
     }
   }
+
+  newFile.close();
+  return 0;
 }
