@@ -1,0 +1,2 @@
+BST.hpp: A C++ header file containing the definition for Binary Search Tree Data Structure and BSTNode, that is necessary for the BST Structure
+Main.cpp: A C++ file demonstrating the functions of the BST class 
