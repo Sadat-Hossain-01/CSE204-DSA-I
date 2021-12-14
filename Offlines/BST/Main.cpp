@@ -22,7 +22,9 @@ int main() {
   while (!newFile.eof()) {
     char op;
     newFile >> op;
+
     if (isCommentOn) cout << "Operation: " << op;
+
     if (op == 'F') {
       int elem;
       newFile >> elem;
