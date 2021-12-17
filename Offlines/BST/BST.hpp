@@ -79,6 +79,7 @@ class BST {
     std::cout << "\n";
   }
   void print() {
+    // std::cout << "Count: " << nodeCount << "; ";
     if (nodeCount > 0) myPrint(root, 0);
     std::cout << "\n";
   }
@@ -128,7 +129,6 @@ template <typename T>
 BSTNode<T> *BST<T>::myInsert(BSTNode<T> *node, const T &element) {
   // got an empty subtree, so create the node
   if (node == nullptr) {
-    nodeCount++;
     return new BSTNode<T>(element, nullptr, nullptr);
   }
   auto elem = node->getElement();
