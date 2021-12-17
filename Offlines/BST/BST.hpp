@@ -132,9 +132,9 @@ BSTNode<T> *BST<T>::myInsert(BSTNode<T> *node, const T &element) {
     return new BSTNode<T>(element, nullptr, nullptr);
   }
   auto elem = node->getElement();
-  if (element < elem)
+  if (element <= elem)
     node->setLeft(myInsert(node->getLeft(), element));
-  else if (element >= elem)
+  else if (element > elem)
     node->setRight(myInsert(node->getRight(), element));
   return node;
 }
