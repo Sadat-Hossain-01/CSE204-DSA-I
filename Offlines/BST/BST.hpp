@@ -53,7 +53,7 @@ class BST {
   }
   void insert(const T &element) {
     if (nodeCount == 0)
-      root->setElement(element);
+      root = new BSTNode<T>(element, nullptr, nullptr);
     else
       root = myInsert(root, element);
     nodeCount++;
