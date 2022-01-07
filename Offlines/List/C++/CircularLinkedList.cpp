@@ -74,6 +74,9 @@ public:
             len++;
         }
     }
+    void remove(T item)
+    {
+        }
     friend ostream &operator<<(ostream &out, const CList<T> &any)
     {
         auto temp = any.head;
