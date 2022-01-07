@@ -2,6 +2,8 @@
 #include <cstdlib>
 using namespace std;
 
+#define endl "\n"
+
 template <typename T>
 class Node
 {
@@ -31,7 +33,7 @@ public:
         len = 0;
         head = tail = new Node<T>(nullptr);
     }
-    void insert(T prev, T elem)
+    void insert(T elem, T prev)
     {
         auto node = new Node<T>(elem, nullptr);
         if (len == 0)
@@ -44,48 +46,58 @@ public:
         }
         auto temp = head;
         int searched = 0;
-        while (temp->next->item != prev && searched++ < len)
+        while (searched <= len)
         {
+            if (temp->item == prev)
+                break;
+            searched++;
             temp = temp->next;
         }
-        if (searched == len)
+        if (searched > len)
         {
             cout << "Not found\n";
-            return;
-        }
-        if (temp == tail)
-        {
-            tail->next = node;
-            tail = node;
-            node->next = head;
         }
         else
         {
-            auto prev_next = temp->next;
-            temp->next = node;
-            node->next = prev_next->next;
-        }
-        len++;
-    }
-    void print()
-    {
-        auto temp = head;
-        while (true)
-        {
-            cout << temp->item << " ";
             if (temp == tail)
             {
-                cout << "\n";
-                return;
+                // node->next = tail->next;
+                node->next = head;
+                temp->next = node;
+                tail = node;
             }
+            else
+            {
+                node->next = temp->next;
+                temp->next = node;
+            }
+            len++;
         }
+    }
+    friend ostream &operator<<(ostream &out, const CList<T> &any)
+    {
+        auto temp = any.head;
+        int printed = 0;
+        while (++printed <= 2 * any.len)
+        {
+            out << temp->item << " ";
+            temp = temp->next;
+        }
+        out << endl;
+        return out;
     }
 };
 
 int main()
 {
     CList<int> test;
-    test.insert(1, NULL);
-    test.insert(2, 1);
-    test.print();
+    test.insert(1, (int)NULL);
+    while (true)
+    {
+        int prev, item;
+        cin >> prev >> item;
+        test.insert(item, prev);
+        cout << test;
+    }
+    cout << test;
 }
