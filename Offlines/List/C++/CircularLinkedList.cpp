@@ -74,11 +74,54 @@ public:
             len++;
         }
     }
-    void remove(T item)
+
+    void remove(T val)
     {
+        if (len == 0)
+            return;
+        if (len == 1)
+            if (head->item == val)
+            {
+                delete head;
+                head = tail = new Node<T>(nullptr);
+                len--;
+                return;
+            }
+        int searched = 0;
+        auto temp = head;
+        while (true)
+        {
+            if (temp->next->item == val)
+                break;
+            searched++;
+            if (searched > len)
+            {
+                cout << "Not found\n";
+                return;
+            }
+            temp = temp->next;
         }
+        bool isTail = false;
+        bool isHead = false;
+        if (temp->next == head)
+            isHead = true;
+        if (temp->next == tail)
+            isTail = true;
+        auto del = temp->next;
+        temp->next = temp->next->next;
+        cout << (isHead ? "Deleting Head\n" : "");
+        cout << (isTail ? "Deleting Tail\n" : "");
+        if (isHead)
+            head = temp->next;
+        if (isTail)
+            tail = temp;
+        delete del;
+        len--;
+    }
+
     friend ostream &operator<<(ostream &out, const CList<T> &any)
     {
+        out << "Head: " << any.head->item << " Tail: " << any.tail->item << endl;
         auto temp = any.head;
         int printed = 0;
         while (++printed <= 2 * any.len)
@@ -97,10 +140,20 @@ int main()
     test.insert(1, (int)NULL);
     while (true)
     {
-        int prev, item;
-        cin >> prev >> item;
-        test.insert(item, prev);
+        char c;
+        cin >> c;
+        if (c == 'I')
+        {
+            int prev, item;
+            cin >> prev >> item;
+            test.insert(item, prev);
+        }
+        else if (c == 'D')
+        {
+            int a;
+            cin >> a;
+            test.remove(a);
+        }
         cout << test;
     }
-    cout << test;
 }
