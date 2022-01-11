@@ -10,11 +10,14 @@ using namespace std;
 
 int main() {
   vector<int> numbers{5, 2, 9, 1, 10, 100, 23};
+  for (int i = 1; i <= 1000000; i++) {
+    numbers.emplace_back(i);
+  }
   Heap h(numbers);
-  cout << h;
+  // cout << h;
   heapsort(numbers);
   bool sorted = true;
-  for (const auto& i : numbers) cout << i << " ";
+  // for (const auto& i : numbers) cout << i << " ";
   cout << endl;
   for (int i = 1; i < numbers.size(); i++) {
     if (numbers[i] > numbers[i - 1]) {

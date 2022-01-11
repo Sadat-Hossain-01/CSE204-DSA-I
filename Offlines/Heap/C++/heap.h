@@ -48,7 +48,7 @@ class Heap {
       arr[i + 1] = vec[i];
     }
     len = maxSize;
-    for (int i = (maxSize + 1) << 1; i >= 1; i--) MAX_HEAPIFY(i);
+    for (int i = (maxSize + 1) >> 1; i >= 1; i--) MAX_HEAPIFY(i);
   }
   Heap(const Heap& other) {
     maxSize = other.maxSize;
@@ -102,7 +102,6 @@ class Heap {
     return out;
   }
 };
-
 void heapsort(std::vector<int>& v) {
   Heap h(v);
   int sz = (int)v.size();
