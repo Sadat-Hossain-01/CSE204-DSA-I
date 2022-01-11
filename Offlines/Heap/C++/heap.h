@@ -50,9 +50,26 @@ class Heap {
     len = maxSize;
     for (int i = (maxSize + 1) << 1; i >= 1; i--) MAX_HEAPIFY(i);
   }
+  Heap(const Heap& other) {
+    maxSize = other.maxSize;
+    len = other.len;
+    arr = new int[maxSize];
+    for (int i = 0; i < maxSize; i++) {
+      arr[i] = other.arr[i];
+    }
+  }
   ~Heap() {
     delete[] arr;
     len = 0;
+  }
+  Heap& operator=(const Heap& other) {
+    if (this == &other) return *this;
+    maxSize = other.maxSize;
+    len = other.len;
+    arr = new int[maxSize];
+    for (int i = 0; i < maxSize; i++) {
+      arr[i] = other.arr[i];
+    }
   }
   void insert(int x) {
     arr[++len] = x;
