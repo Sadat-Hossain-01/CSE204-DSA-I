@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstdlib>
 #include <vector>
 
 #define assertm(exp, msg) assert(((void)msg, exp))
