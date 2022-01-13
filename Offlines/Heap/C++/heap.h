@@ -7,7 +7,6 @@
 inline int LEFT(int x) { return x << 1; }
 inline int RIGHT(int x) { return (x << 1) | 1; }
 inline int PARENT(int x) { return x >> 1; }
-
 inline void swap(int& a, int& b) { b = (a + b) - (a = b); }
 
 class Heap {

@@ -54,5 +54,22 @@ int main() {
     }
   }
 
+  // int matched = 0;
+  // for (int i = 0; i < number_of_numbers; i++) {
+  //   int pqueue = pq.top();
+  //   pq.pop();
+  //   int heapmax = h.getMax();
+  //   h.deleteKey();
+  //   int also = numbers[i];
+  //   if (pqueue != heapmax || pqueue != also || heapmax != also) {
+  //     cout << "Mismatch " << i << " " << pqueue << " " << heapmax << " " <<
+  //     also
+  //          << endl;
+  //   } else {
+  //     matched++;
+  //   }
+  // }
+  // cout << matched << endl;
+
   return 0;
 }

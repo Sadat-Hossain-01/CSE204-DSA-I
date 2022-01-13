@@ -64,8 +64,8 @@ int main() {
 
   for (int i = 0; i < number_of_numbers; i++)
     h.deleteKey();  // deleting the root of the heap.
-  // You need to implement this in such a way that
-  // the remaining tree remains complete binary tree.
+                    // You need to implement this in such a way that
+                    // the remaining tree remains complete binary tree.
 
   cout << "Deleting " << numbers.size() << " numbers from my heap takes "
        << float(clock() - time_of_deletion_in_my_heap) / CLOCKS_PER_SEC
