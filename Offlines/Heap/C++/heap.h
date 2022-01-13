@@ -71,6 +71,11 @@ class Heap {
     }
   }
   void insert(int x) {
+    if (len == maxSize) {
+      std::cout << "Full heap\n";
+      return;
+    }
+    assertm(len < maxSize, "Full heap\n");
     arr[++len] = x;
     int idx = len;
     int parent;
@@ -84,7 +89,10 @@ class Heap {
     }
   }
   void deleteKey() {
-    if (len == 0) return;
+    if (len == 0) {
+      std::cout << "Empty heap\n";
+      return;
+    }
     assertm(len > 0, "Empty heap");
     swap(arr[1], arr[len]);
     len--;
