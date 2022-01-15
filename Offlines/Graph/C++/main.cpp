@@ -50,6 +50,26 @@ void bfs(int source) {
   }
 }
 
+void dfs(int node, int ancestor) {
+  parent[node] = ancestor;
+  dist[node] = dist[ancestor] + 1;
+  for (int i = 1; i <= n; i++) {
+    if (node + i > x) continue;
+    if (dist[node + i] >= dist[node] + 1) {
+      int destination = node + i;
+      dist[destination] = dist[node] + 1;
+      int prev = node;
+      while (ladder_snake[destination] != -1) {
+        parent[destination] = prev;
+        dist[destination] = dist[prev] + 1;
+        prev = destination;
+        destination = ladder_snake[destination];
+      }
+      dfs(destination, prev);
+    }
+  }
+}
+
 int main() {
   if (fileIO) {
     freopen("in.txt", "r", stdin);
@@ -73,7 +93,9 @@ int main() {
       cin >> ss >> se;
       ladder_snake[ss] = se;
     }
+    dist[0] = -1;
     bfs(1);
+    // dfs(1, 0);
 
     if (parent[x] == -1)
       cout << -1 << endl << "No solution" << endl;
