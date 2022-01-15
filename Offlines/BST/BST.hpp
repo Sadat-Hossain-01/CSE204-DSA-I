@@ -49,7 +49,7 @@ class BST {
   enum Type { In, Pre, Post };
   BST() {
     nodeCount = 0;
-    root = new BSTNode<T>();
+    root = nullptr;
   }
   void insert(const T &element) {
     if (nodeCount == 0)
