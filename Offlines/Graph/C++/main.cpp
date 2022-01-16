@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <stack>
+#include <vector>
 using namespace std;
 
 #define endl "\n"
@@ -17,55 +18,53 @@ void reset() {
     parent[i] = ladder_snake[i] = -1;
     dist[i] = 1e8;
   }
+  dist[0] = -1;
 }
 
-void visit(int prev, int child, queue<int>& q) {
-  parent[child] = prev;
-  dist[child] = dist[prev] + 1;
-  q.push(child);
+void visit(int node, int immediate_parent, int ancestor) {
+  parent[node] = immediate_parent;
+  dist[node] = dist[ancestor] + 1;
 }
 
 void bfs(int source) {
   queue<int> q;
   q.push(source);
   dist[source] = 0;
-  parent[source] = source;
+  parent[source] = 1;
   while (!q.empty()) {
-    int now = q.front();
+    int current = q.front();
     q.pop();
-    for (int i = 1; i <= n; i++) {
-      if (now + i > x) continue;
-      if (parent[now + i] != -1) continue;
-      int destination = now + i;
-      dist[destination] = dist[now] + 1;
-      int prev = now;
-      while (ladder_snake[destination] != -1) {
-        parent[destination] = prev;
-        dist[destination] = dist[prev] + 1;
+    for (int i = 1; i <= min(n, x - current); i++) {
+      int destination = current + i;
+      if (parent[destination] != -1)
+        continue;  // destination is already
+                   // visited
+      int prev = current;
+      while (ladder_snake[destination] !=
+             -1) {  // if there is any snake or ladder in this cell
+        visit(destination, prev, current);
         prev = destination;
         destination = ladder_snake[destination];
       }
-      visit(prev, destination, q);
+      visit(destination, prev, current);
+      q.push(destination);
     }
   }
 }
 
-void dfs(int node, int ancestor) {
-  parent[node] = ancestor;
-  dist[node] = dist[ancestor] + 1;
-  for (int i = 1; i <= n; i++) {
-    if (node + i > x) continue;
-    if (dist[node + i] >= dist[node] + 1) {
-      int destination = node + i;
+void dfs(int node, int par = 0, int ancestor = 0) {
+  visit(node, par, ancestor);
+  for (int i = 1; i <= min(n, x - node); i++) {
+    int destination = node + i;
+    if (dist[destination] > dist[node] + 1) {
       dist[destination] = dist[node] + 1;
       int prev = node;
       while (ladder_snake[destination] != -1) {
-        parent[destination] = prev;
-        dist[destination] = dist[prev] + 1;
+        visit(destination, prev, node);
         prev = destination;
         destination = ladder_snake[destination];
       }
-      dfs(destination, prev);
+      dfs(destination, prev, node);
     }
   }
 }
@@ -93,25 +92,24 @@ int main() {
       cin >> ss >> se;
       ladder_snake[ss] = se;
     }
-    dist[0] = -1;
     bfs(1);
-    // dfs(1, 0);
+    // dfs(1);
 
     if (parent[x] == -1)
       cout << -1 << endl << "No solution" << endl;
     else {
       cout << dist[x] << endl;
-      int now = x;
+      int current = x;
       stack<int> st;
-      while (now != 1) {
-        st.push(now);
-        now = parent[now];
+      while (current != 1) {
+        st.push(current);
+        current = parent[current];
       }
       st.push(1);
-      cout << "1 ";
+      cout << "1";
       st.pop();
       while (!st.empty()) {
-        cout << "-> " << st.top();
+        cout << " -> " << st.top();
         st.pop();
       }
       cout << endl;
