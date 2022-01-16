@@ -24,19 +24,19 @@ void reset() {
   }
 }
 
-void setParent(int node, int par) {
-  if (isCommentOn) cout << "\tSet parent[" << node << "] = " << par << endl;
-  parent[node] = par;
+inline void setParent(int node, int p) {
+  if (isCommentOn) cout << "\tSet parent[" << node << "] = " << p << endl;
+  parent[node] = p;
 }
 
-void setDistance(int node, int d) {
+inline void setDistance(int node, int d) {
   if (isCommentOn) cout << "\tSet dist[" << node << "] = " << d << endl;
   dist[node] = d;
 }
 
-void setBoth(int node, int par, int dis) {
-  setParent(node, par);
-  setDistance(node, dis);
+inline void setBoth(int node, int p, int d) {
+  setParent(node, p);
+  setDistance(node, d);
 }
 
 void bfs(int node) {
