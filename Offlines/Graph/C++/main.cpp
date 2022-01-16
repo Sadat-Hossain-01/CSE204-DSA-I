@@ -6,7 +6,7 @@ using namespace std;
 
 #define endl "\n"
 
-const bool fileIO = true;
+const bool fileIO = true, isCommentOn = false;
 int n, x, l, s;
 const int MAX_SIZE = 10005;
 int ladder_snake[MAX_SIZE];
@@ -15,13 +15,16 @@ int dist[MAX_SIZE];
 
 void reset() {
   for (int i = 0; i < MAX_SIZE; i++) {
-    parent[i] = ladder_snake[i] = -1;
+    parent[i] = -1;
+    ladder_snake[i] = i;
     dist[i] = 1e8;
   }
   dist[0] = -1;
 }
 
 void visit(int node, int immediate_parent, int ancestor) {
+  if (isCommentOn)
+    cout << "Child: " << node << " Parent: " << immediate_parent << endl;
   parent[node] = immediate_parent;
   dist[node] = dist[ancestor] + 1;
 }
@@ -41,7 +44,8 @@ void bfs(int source) {
                    // visited
       int prev = current;
       while (ladder_snake[destination] !=
-             -1) {  // if there is any snake or ladder in this cell
+             destination) {  // if there is any snake or ladder in this cell
+        if (isCommentOn) cout << destination << endl;
         visit(destination, prev, current);
         prev = destination;
         destination = ladder_snake[destination];
