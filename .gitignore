@@ -15,3 +15,5 @@ Offlines/List Offline 1/C++/.vs/C++/v16/.suo
 *.o
 Offlines/BST/.clang-format
 Offlines/Graph/C++/.clang-format
+Offlines/Graph/C++/in.txt
+Offlines/Graph/C++/out.txt
