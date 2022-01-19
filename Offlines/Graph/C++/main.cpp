@@ -46,19 +46,32 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
   setBoth(node, node, 0, parent, dist);
   while (!q.empty()) {
     int current = q.front();
+    // wherever I go from this current node,
+    // all will have distance of dist[current] + 1
     int roll = dist[current] + 1;
     q.pop();
     if (isCommentOn) cout << "Popped " << current << endl;
+
+    // currently at current, can go to current + 1 to current + i,
+    // given that i <= n and current + i <= x
+    // So, i = min(n, x - current)
     for (int i = 1; i <= min(n, x - current); i++) {
       int destination = current + i;
+      // if destination is already visited, do not revisit
       if (parent[destination] != -1) continue;
       int previous = current;
+
+      // checking if there is a ladder/snake in destination
+      // the loop is for checking consecutive ladders/snakes
+      // it will terminate at the final node where there is no ladder/snake
       while (destination != ladder_snake[destination]) {
         setBoth(destination, previous, roll, parent, dist);
         previous = destination;
         destination = ladder_snake[destination];
       }
 
+      // if this final node is not already pushed,
+      // it can now be pushed to the queue
       if (!pushed[destination]) {
         setBoth(destination, previous, roll, parent, dist);
         q.push(destination);
