@@ -6,7 +6,8 @@
 using namespace std;
 
 #define endl "\n"
-const bool fileIO = true, isCommentOn = false;
+
+const bool fileIO = true, commentOn = false;
 const int MAX_SIZE = 10005;
 const int INF = 2e9;
 
@@ -22,20 +23,26 @@ void reset(int x, vector<int>& dist, vector<int>& parent,
   iota(ladder_snake.begin(), ladder_snake.begin() + x + 2, 0);
 }
 
+// the follwing 3 functions have been separeted for ease in debugging by
+// printing states
+// also the debugging outputs are being done in cerr
 inline void setParent(int node, int p, vector<int>& parent) {
-  if (isCommentOn) cerr << "\tSet parent[" << node << "] = " << p << endl;
+  if (commentOn) cerr << "\tSet parent[" << node << "] = " << p << endl;
   parent[node] = p;
+  return;
 }
 
 inline void setDistance(int node, int d, vector<int>& dist) {
-  if (isCommentOn) cerr << "\tSet dist[" << node << "] = " << d << endl;
+  if (commentOn) cerr << "\tSet dist[" << node << "] = " << d << endl;
   dist[node] = d;
+  return;
 }
 
 inline void setBoth(int node, int p, int d, vector<int>& parent,
                     vector<int>& dist) {
   setParent(node, p, parent);
   setDistance(node, d, dist);
+  return;
 }
 
 void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
@@ -44,26 +51,31 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
   q.push(node);
   pushed[node] = true;
   setBoth(node, node, 0, parent, dist);
+
   while (!q.empty()) {
     int current = q.front();
     // wherever I go from this current node,
     // all will have distance of dist[current] + 1
     int roll = dist[current] + 1;
     q.pop();
-    if (isCommentOn) cerr << "Popped " << current << endl;
+    if (commentOn) cerr << "Popped " << current << endl;
 
-    // currently at current, can go to current + 1 to current + i,
+    // currently at node current, can go to current + 1 to current + i,
     // given that i <= n and current + i <= x
     // So, i = min(n, x - current)
     for (int i = 1; i <= min(n, x - current); i++) {
       int destination = current + i;
       // if destination is already visited, do not revisit
       if (parent[destination] != -1) continue;
+
+      // previous is required for keeping track of the immediate previous node
+      // in the next loop
       int previous = current;
 
       // checking if there is a ladder/snake in destination
       // the loop is for checking consecutive ladders/snakes
       // it will terminate at the final node where there is no ladder/snake
+      // or in an intermediate node already reached early by other means
       while (parent[destination] == -1 &&
              destination != ladder_snake[destination]) {
         setBoth(destination, previous, roll, parent, dist);
@@ -77,18 +89,38 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
         setBoth(destination, previous, roll, parent, dist);
         q.push(destination);
         pushed[destination] = true;
-        if (isCommentOn) cerr << "\tPushed " << destination << endl;
+        if (commentOn) cerr << "\tPushed " << destination << endl;
       }
     }
   }
+
+  return;
+}
+
+int printUnreachables(int x, const vector<int>& parent) {
+  // this function prints the unreachable nodes if the journey is started from 1
+  int unreachable = 0;
+  for (int i = 1; i <= x; i++) {
+    if (parent[i] == -1) {
+      unreachable++;
+      cout << i << " ";
+    }
+  }
+
+  if (unreachable == 0) cout << "All reachable" << endl;
+
+  return unreachable;
 }
 
 int main() {
+  // for console I/O, it is enough to set fileIO = false,
+  // which is true by default
   if (fileIO) {
     freopen("in.txt", "r", stdin);
     freopen("out.txt", "w", stdout);
   }
 
+  // initializing the necessary vectors with appropriate values
   vector<int> ladder_snake(MAX_SIZE);
   vector<int> dist(MAX_SIZE, INF);
   vector<int> parent(MAX_SIZE, -1);
@@ -100,8 +132,14 @@ int main() {
   while (t--) {
     int n, x, l, s;
     cin >> n >> x >> l;
+
     reset(x, dist, parent, ladder_snake, pushed);
 
+    // both ladder/snake does the same thing in a sense
+    // both of them actually transforms a cell to a different cell
+    // so storing them in the same vector is enough
+
+    // ladder input first
     for (int i = 1; i <= l; i++) {
       int ls, le;
       cin >> ls >> le;
@@ -109,17 +147,18 @@ int main() {
     }
 
     cin >> s;
+    // then snake input
     for (int i = 1; i <= s; i++) {
       int ss, se;
       cin >> ss >> se;
       ladder_snake[ss] = se;
     }
 
-    // does the bfs call
+    // calls bfs function
     bfs(1, n, x, pushed, dist, parent, ladder_snake);
 
     // optional printing for debugging
-    if (isCommentOn) {
+    if (commentOn) {
       for (int i = 1; i <= x; i++) {
         cerr << "Node: " << i << " Parent: " << parent[i]
              << " LS: " << ladder_snake[i] << " Distance: " << dist[i] << endl;
@@ -132,6 +171,9 @@ int main() {
     else {
       cout << dist[x] << endl;
       int current = x;
+
+      // will push all nodes one by one to the stack
+      // so that while popping, they will be in the correct order
       stack<int> st;
       while (current != 1) {
         st.push(current);
@@ -147,17 +189,8 @@ int main() {
       cout << endl;
     }
 
-    // this block prints the unreachable nodes if the journey is started from 1
-    int unreachable = 0;
-    for (int i = 1; i <= x; i++) {
-      if (parent[i] == -1) {
-        unreachable++;
-        cout << i << " ";
-      }
-    }
-
-    if (unreachable == 0) cout << "All reachable";
-    cout << endl << endl;
+    printUnreachables(x, parent);
+    cout << endl;
   }
 
   return 0;
