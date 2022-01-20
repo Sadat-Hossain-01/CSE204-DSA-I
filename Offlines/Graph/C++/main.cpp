@@ -64,7 +64,8 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
       // checking if there is a ladder/snake in destination
       // the loop is for checking consecutive ladders/snakes
       // it will terminate at the final node where there is no ladder/snake
-      while (destination != ladder_snake[destination]) {
+      while (parent[destination] == -1 &&
+             destination != ladder_snake[destination]) {
         setBoth(destination, previous, roll, parent, dist);
         previous = destination;
         destination = ladder_snake[destination];
@@ -72,7 +73,7 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
 
       // if this final node is not already pushed,
       // it can now be pushed to the queue
-      if (!pushed[destination]) {
+      if (parent[destination] == -1 && !pushed[destination]) {
         setBoth(destination, previous, roll, parent, dist);
         q.push(destination);
         pushed[destination] = true;
