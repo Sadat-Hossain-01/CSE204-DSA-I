@@ -23,12 +23,12 @@ void reset(int x, vector<int>& dist, vector<int>& parent,
 }
 
 inline void setParent(int node, int p, vector<int>& parent) {
-  if (isCommentOn) cout << "\tSet parent[" << node << "] = " << p << endl;
+  if (isCommentOn) cerr << "\tSet parent[" << node << "] = " << p << endl;
   parent[node] = p;
 }
 
 inline void setDistance(int node, int d, vector<int>& dist) {
-  if (isCommentOn) cout << "\tSet dist[" << node << "] = " << d << endl;
+  if (isCommentOn) cerr << "\tSet dist[" << node << "] = " << d << endl;
   dist[node] = d;
 }
 
@@ -50,7 +50,7 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
     // all will have distance of dist[current] + 1
     int roll = dist[current] + 1;
     q.pop();
-    if (isCommentOn) cout << "Popped " << current << endl;
+    if (isCommentOn) cerr << "Popped " << current << endl;
 
     // currently at current, can go to current + 1 to current + i,
     // given that i <= n and current + i <= x
@@ -77,7 +77,7 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
         setBoth(destination, previous, roll, parent, dist);
         q.push(destination);
         pushed[destination] = true;
-        if (isCommentOn) cout << "\tPushed " << destination << endl;
+        if (isCommentOn) cerr << "\tPushed " << destination << endl;
       }
     }
   }
@@ -121,7 +121,7 @@ int main() {
     // optional printing for debugging
     if (isCommentOn) {
       for (int i = 1; i <= x; i++) {
-        cout << "Node: " << i << " Parent: " << parent[i]
+        cerr << "Node: " << i << " Parent: " << parent[i]
              << " LS: " << ladder_snake[i] << " Distance: " << dist[i] << endl;
       }
     }
