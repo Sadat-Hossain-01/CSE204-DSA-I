@@ -12,12 +12,11 @@ const int MAX_SIZE = 10005;
 const int INF = 2e9;
 
 void reset(int x, vector<int>& dist, vector<int>& parent,
-           vector<int>& ladder_snake, vector<bool>& pushed) {
+           vector<int>& ladder_snake) {
   // this function resets all the vectors at the start of each test case
   fill(parent.begin(), parent.begin() + x + 2, -1);
   dist[0] = -1;
   fill(dist.begin() + 1, dist.begin() + x + 2, INF);
-  fill(pushed.begin(), pushed.begin() + x + 2, false);
   // iota fills the vector with 0, 1, 2, 3, 4.....
   // (consecutive numbers starting from the third argument of the function)
   iota(ladder_snake.begin(), ladder_snake.begin() + x + 2, 0);
@@ -45,11 +44,10 @@ inline void setBoth(int node, int p, int d, vector<int>& parent,
   return;
 }
 
-void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
-         vector<int>& parent, vector<int>& ladder_snake) {
+void bfs(int node, int n, int x, vector<int>& dist, vector<int>& parent,
+         vector<int>& ladder_snake) {
   queue<int> q;
   q.push(node);
-  pushed[node] = true;
   setBoth(node, node, 0, parent, dist);
 
   while (!q.empty()) {
@@ -85,10 +83,9 @@ void bfs(int node, int n, int x, vector<bool>& pushed, vector<int>& dist,
 
       // if this final node is not already pushed,
       // it can now be pushed to the queue
-      if (parent[destination] == -1 && !pushed[destination]) {
+      if (parent[destination] == -1) {
         setBoth(destination, previous, roll, parent, dist);
         q.push(destination);
-        pushed[destination] = true;
         if (commentOn) cerr << "\tPushed " << destination << endl;
       }
     }
@@ -125,7 +122,6 @@ int main() {
   vector<int> ladder_snake(MAX_SIZE);
   vector<int> dist(MAX_SIZE, INF);
   vector<int> parent(MAX_SIZE, -1);
-  vector<bool> pushed(MAX_SIZE, false);
 
   int t;
   cin >> t;
@@ -134,7 +130,7 @@ int main() {
     int n, x, l, s;
     cin >> n >> x >> l;
 
-    reset(x, dist, parent, ladder_snake, pushed);
+    reset(x, dist, parent, ladder_snake);
 
     // both ladder/snake does the same thing in a sense
     // both of them actually transforms a cell to a different cell
@@ -156,7 +152,7 @@ int main() {
     }
 
     // calls bfs function
-    bfs(1, n, x, pushed, dist, parent, ladder_snake);
+    bfs(1, n, x, dist, parent, ladder_snake);
 
     // optional printing for debugging
     if (commentOn) {
