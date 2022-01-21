@@ -107,7 +107,8 @@ int printUnreachables(int x, const vector<int>& parent) {
     }
   }
 
-  if (unreachable == 0) cout << "All reachable" << endl;
+  if (unreachable == 0) cout << "All reachable";
+  cout << endl;
 
   return unreachable;
 }
