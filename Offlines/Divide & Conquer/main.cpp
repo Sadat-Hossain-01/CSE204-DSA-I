@@ -27,7 +27,7 @@ int main() {
       int seed = rand();
 
       vector<int> vec = generateRandomVector(i, seed);
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       clock_t now = clock();
       mergeSort(vec);
       ms += double(clock() - now) / CLOCKS_PER_SEC;
@@ -37,7 +37,7 @@ int main() {
              << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       qs += double(clock() - now) / CLOCKS_PER_SEC;
@@ -47,7 +47,7 @@ int main() {
              << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       randomizedQuickSort(vec);
       rqs += double(clock() - now) / CLOCKS_PER_SEC;
@@ -57,7 +57,7 @@ int main() {
              << rqs * 1000 / repeat << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       insertionSort(vec);
       is += double(clock() - now) / CLOCKS_PER_SEC;
@@ -66,7 +66,7 @@ int main() {
         cerr << "Insertion Sort done. Average Until now: " << is * 1000 / repeat
              << "ms" << endl;
 
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       qsi += double(clock() - now) / CLOCKS_PER_SEC;
@@ -76,7 +76,7 @@ int main() {
         cerr << "Quick Sort on sorted input done. Average Until now: "
              << qsi * 1000 / repeat << "ms" << endl;
 
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       randomizedQuickSort(vec);
       rqsi += double(clock() - now) / CLOCKS_PER_SEC;
@@ -88,7 +88,7 @@ int main() {
             << rqsi * 1000 / repeat << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i == 0 && commentOn) printVector(vec);
+      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       sort(vec.begin(), vec.end());
       stls += double(clock() - now) / CLOCKS_PER_SEC;
