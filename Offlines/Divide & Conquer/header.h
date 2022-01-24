@@ -43,16 +43,14 @@ void mergeSort(vector<int> &vec) {
 }
 
 int partition(vector<int> &vec, int l, int r, bool randomizedPivot) {
-  int pivot;
   assertm(l >= 0 && r < (int)vec.size(), "Quick Sort Index Out of Bounds");
-  if (randomizedPivot)
-    pivot = generateRandomNumber(l, r);
-  else
-    pivot = r;
-  int x = vec[pivot];
+  if (randomizedPivot) {
+    int pivot = generateRandomNumber(l, r);
+    swap(vec[pivot], vec[r]);
+  }
+  int x = vec[r];
   int i = l - 1;
-  for (int j = l; j <= r; j++) {
-    if (j == pivot) continue;
+  for (int j = l; j < r; j++) {
     assertm(i + 1 <= r, "Quick Sort Index Out of Bounds");
     if (vec[j] <= x) swap(vec[++i], vec[j]);
   }
@@ -87,4 +85,12 @@ void insertionSort(vector<int> &vec) {
     }
     vec[j + 1] = key;
   }
+}
+
+bool isSorted(vector<int> &vec) {
+  int len = vec.size();
+  for (int i = 1; i < len; i++) {
+    if (vec[i] < vec[i - 1]) return false;
+  }
+  return true;
 }
