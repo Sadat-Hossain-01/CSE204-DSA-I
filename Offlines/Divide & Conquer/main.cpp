@@ -5,7 +5,7 @@
 #include "header.h"
 using namespace std;
 
-const bool commentOn = true;
+const bool commentOn = false;
 
 vector<int> length{5, 10, 100, 1000, 10000, 100000};
 
@@ -72,6 +72,9 @@ int main() {
       sort(vec.begin(), vec.end());
       stls += float(clock() - now) / CLOCKS_PER_SEC;
       if (commentOn) cerr << "STL sort done" << endl;
+
+      if (commentOn)
+        cerr << "n = " << length[i] << " " << repeat << " times done" << endl;
     }
 
     cout << "n = " << length[i] << endl;
