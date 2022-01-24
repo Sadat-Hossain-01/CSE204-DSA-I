@@ -20,6 +20,7 @@ vector<int> generateRandomVector(int index, int seed) {
 }
 
 int main() {
+  clock_t start = clock();
   for (int i = 0; i < length.size(); i++) {
     double ms = 0, qs = 0, rqs = 0, is = 0, qsi = 0, rqsi = 0, stls = 0;
     int repeat;
@@ -113,4 +114,8 @@ int main() {
     cout << "STL Sort : " << stls * 1000 / repeat << "ms" << endl;
     cout << endl;
   }
+
+  cerr << "Program ended in " << double(clock() - start) / CLOCKS_PER_SEC
+       << " seconds" << endl;
+  return 0;
 }
