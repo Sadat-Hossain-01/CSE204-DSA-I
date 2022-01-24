@@ -64,7 +64,7 @@ int main() {
       randomizedQuickSort(vec);
       rqsi += float(clock() - now) / CLOCKS_PER_SEC;
       if (commentOn)
-        cout << "Randomized Quick Sort on sorted input done" << endl;
+        cerr << "Randomized Quick Sort on sorted input done" << endl;
 
       vec = generateRandomVector(i, seed);
       if (i == 0 && commentOn) printVector(vec);
@@ -73,6 +73,7 @@ int main() {
       stls += float(clock() - now) / CLOCKS_PER_SEC;
       if (commentOn) cerr << "STL sort done" << endl;
     }
+
     cout << "n = " << length[i] << endl;
     cout << "Merge Sort: " << ms * 50 << "ms" << endl;
     cout << "Quick Sort: " << qs * 50 << "ms" << endl;
