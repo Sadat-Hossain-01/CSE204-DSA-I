@@ -5,7 +5,7 @@
 #include "header.h"
 using namespace std;
 
-const bool commentOn = false;
+const bool commentOn = true;
 
 vector<int> length{5, 10, 100, 1000, 10000, 100000};
 
@@ -30,34 +30,34 @@ int main() {
       clock_t now = clock();
       mergeSort(vec);
       ms += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "Merge Sort done" << endl;
+      if (commentOn) cerr << "Merge Sort done" << endl;
 
       vec = generateRandomVector(i, seed);
       if (i == 0 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       qs += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "Quick Sort done" << endl;
+      if (commentOn) cerr << "Quick Sort done" << endl;
 
       vec = generateRandomVector(i, seed);
       if (i == 0 && commentOn) printVector(vec);
       now = clock();
       randomizedQuickSort(vec);
       rqs += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "Randomized Quick Sort done" << endl;
+      if (commentOn) cerr << "Randomized Quick Sort done" << endl;
 
       vec = generateRandomVector(i, seed);
       if (i == 0 && commentOn) printVector(vec);
       now = clock();
       insertionSort(vec);
       is += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "Insertion Sort done" << endl;
+      if (commentOn) cerr << "Insertion Sort done" << endl;
 
       if (i == 0 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       qsi += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "Quick Sort on sorted input done" << endl;
+      if (commentOn) cerr << "Quick Sort on sorted input done" << endl;
 
       if (i == 0 && commentOn) printVector(vec);
       now = clock();
@@ -71,7 +71,7 @@ int main() {
       now = clock();
       sort(vec.begin(), vec.end());
       stls += float(clock() - now) / CLOCKS_PER_SEC;
-      if (commentOn) cout << "STL sort done" << endl;
+      if (commentOn) cerr << "STL sort done" << endl;
     }
     cout << "n = " << length[i] << endl;
     cout << "Merge Sort: " << ms * 50 << "ms" << endl;

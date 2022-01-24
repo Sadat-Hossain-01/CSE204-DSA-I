@@ -1,6 +1,10 @@
+#include <cassert>
 #include <cstdlib>
 #include <vector>
+
 #define endl "\n"
+#define assertm(exp, msg) assert(((void)msg, exp))
+
 using namespace std;
 inline int generateRandomNumber(int a, int b) {
   // [a, b]
@@ -11,6 +15,7 @@ void printVector(vector<int> &vec) {
   cerr << endl;
 }
 void merge(vector<int> &vec, int l, int mid, int r) {
+  assertm(l >= 0 && r < (int)vec.size(), "Merge Sort Index Out of Bounds");
   int len1 = mid - l + 1;
   int len2 = r - mid;
   vector<int> v1(vec.begin() + l, vec.begin() + mid + 1);
@@ -39,6 +44,7 @@ void mergeSort(vector<int> &vec) {
 
 int partition(vector<int> &vec, int l, int r, bool randomizedPivot) {
   int pivot;
+  assertm(l >= 0 && r < (int)vec.size(), "Quick Sort Index Out of Bounds");
   if (randomizedPivot)
     pivot = generateRandomNumber(l, r);
   else
@@ -47,6 +53,7 @@ int partition(vector<int> &vec, int l, int r, bool randomizedPivot) {
   int i = l - 1;
   for (int j = l; j <= r; j++) {
     if (j == pivot) continue;
+    assertm(i + 1 <= r, "Quick Sort Index Out of Bounds");
     if (vec[j] <= x) swap(vec[++i], vec[j]);
   }
   swap(vec[++i], vec[r]);
