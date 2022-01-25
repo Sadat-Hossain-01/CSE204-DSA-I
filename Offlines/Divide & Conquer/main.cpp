@@ -21,21 +21,25 @@ vector<int> generateRandomVector(int index, int seed) {
 
 int main() {
   clock_t start = clock();
-  freopen("out2.csv", "w", stdout);
-  cout << "           Time required in ms" << endl;
+
+  freopen("outVector.csv", "w", stdout);
+
+  cout << "Time required in ms" << endl;
   cout << "n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, "
           "Quicksort with Sorted Input, Randomized Quicksort with Sorted "
           "Input, STL sort() function"
        << endl;
+
   for (int i = 0; i < length.size(); i++) {
     cout << length[i] << ", ";
+
     double ms = 0, qs = 0, rqs = 0, is = 0, qsi = 0, rqsi = 0, stls = 0;
     int repeat;
+
     for (repeat = 1; repeat <= 20; repeat++) {
       int seed = rand();
 
       vector<int> vec = generateRandomVector(i, seed);
-      if (i <= 1 && commentOn) printVector(vec);
       clock_t now = clock();
       mergeSort(vec);
       clock_t end = clock();
@@ -45,7 +49,6 @@ int main() {
              << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       end = clock();
@@ -55,7 +58,6 @@ int main() {
              << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       randomizedQuickSort(vec);
       end = clock();
@@ -65,7 +67,6 @@ int main() {
              << rqs * 1000 / repeat << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       insertionSort(vec);
       end = clock();
@@ -74,7 +75,6 @@ int main() {
         cerr << "Insertion Sort done. Average Until now: " << is * 1000 / repeat
              << "ms" << endl;
 
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       quickSort(vec);
       end = clock();
@@ -83,7 +83,6 @@ int main() {
         cerr << "Quick Sort on sorted input done. Average Until now: "
              << qsi * 1000 / repeat << "ms" << endl;
 
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       randomizedQuickSort(vec);
       end = clock();
@@ -94,7 +93,6 @@ int main() {
             << rqsi * 1000 / repeat << "ms" << endl;
 
       vec = generateRandomVector(i, seed);
-      if (i <= 1 && commentOn) printVector(vec);
       now = clock();
       sort(vec.begin(), vec.end());
       end = clock();
@@ -120,6 +118,8 @@ int main() {
     // cout << "STL Sort : " << stls * 1000 / repeat << "ms" << endl;
     // cout << endl;
 
+    repeat--;
+
     cout << ms * 1000 / repeat << ", " << qs * 1000 / repeat << ", "
          << rqs * 1000 / repeat << ", " << is * 1000 / repeat << ", "
          << qsi * 1000 / repeat << ", " << rqsi * 1000 / repeat << ", "
@@ -128,5 +128,6 @@ int main() {
 
   cerr << "Program ended in " << double(clock() - start) / CLOCKS_PER_SEC
        << " seconds" << endl;
+
   return 0;
 }

@@ -23,8 +23,8 @@ void copyArray(int* from, int* to, int len) {
 
 int main() {
   clock_t start = clock();
-  freopen("outArrayWithO3withDeletion.csv", "w", stdout);
-  cout << "           Time required in ms" << endl;
+  freopen("outArray.csv", "w", stdout);
+  cout << "Time required in ms" << endl;
   cout << "n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, "
           "Quicksort with Sorted Input, Randomized Quicksort with Sorted "
           "Input, STL sort() function"

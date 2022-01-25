@@ -56,20 +56,17 @@ int partition(int *arr, int l, int r) {
   swap(arr[++i], arr[r]);
   return i;
 }
-
 int randomizedPartition(int *arr, int l, int r) {
   int pivot = generateRandomNumber(l, r);
   swap(arr[pivot], arr[r]);
   return partition(arr, l, r);
 }
-
 void quickSort(int *arr, int l, int r) {
   if (l >= r) return;
   int y = partition(arr, l, r);
   quickSort(arr, l, y - 1);
   quickSort(arr, y + 1, r);
 }
-
 void randomizedQuickSort(int *arr, int l, int r) {
   if (l >= r) return;
   int y = randomizedPartition(arr, l, r);
