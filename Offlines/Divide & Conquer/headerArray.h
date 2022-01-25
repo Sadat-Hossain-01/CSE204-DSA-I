@@ -17,10 +17,12 @@ void merge(int *arr, int l, int mid, int r) {
   //   assertm(l >= 0 && r < (int)vec.size(), "Merge Sort Index Out of Bounds");
   int len1 = mid - l + 1;
   int len2 = r - mid;
+
   int *arr1 = new int[len1];
   int *arr2 = new int[len2];
   for (int i = l, j = 0; i <= mid; i++) arr1[j++] = arr[i];
   for (int i = mid + 1, j = 0; i <= r; i++) arr2[j++] = arr[i];
+
   int lx = 0, rx = 0;
   int index = l;
   while (lx < len1 && rx < len2) {
@@ -31,6 +33,9 @@ void merge(int *arr, int l, int mid, int r) {
   }
   while (lx < len1) arr[index++] = arr1[lx++];
   while (rx < len2) arr[index++] = arr2[rx++];
+
+  delete[] arr1;
+  delete[] arr2;
 }
 void mergeSort(int *arr, int l, int r) {
   if (l >= r) return;

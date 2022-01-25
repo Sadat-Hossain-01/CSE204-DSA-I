@@ -23,7 +23,7 @@ void copyArray(int* from, int* to, int len) {
 
 int main() {
   clock_t start = clock();
-  freopen("out.csv", "w", stdout);
+  freopen("outArrayWithO3withDeletion.csv", "w", stdout);
   cout << "           Time required in ms" << endl;
   cout << "n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, "
           "Quicksort with Sorted Input, Randomized Quicksort with Sorted "
@@ -125,6 +125,9 @@ int main() {
          << rqs * 1000 / repeat << ", " << is * 1000 / repeat << ", "
          << qsi * 1000 / repeat << ", " << rqsi * 1000 / repeat << ", "
          << stls * 1000 / repeat << endl;
+
+    delete[] arrayForThis;
+    delete[] arrayToPass;
   }
 
   cerr << "Program ended in " << double(clock() - start) / CLOCKS_PER_SEC
