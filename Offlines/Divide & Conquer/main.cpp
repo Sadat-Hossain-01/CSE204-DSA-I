@@ -5,7 +5,7 @@
 #include "header.h"
 using namespace std;
 
-const bool commentOn = true;
+const bool commentOn = false;
 
 vector<int> length{5, 10, 100, 1000, 10000, 100000};
 
