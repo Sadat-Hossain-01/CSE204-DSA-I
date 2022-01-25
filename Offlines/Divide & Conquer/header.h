@@ -17,7 +17,7 @@ void printVector(vector<int> &vec) {
   cerr << endl;
 }
 void merge(vector<int> &vec, int l, int mid, int r) {
-  assertm(l >= 0 && r < (int)vec.size(), "Merge Sort Index Out of Bounds");
+  // assertm(l >= 0 && r < (int)vec.size(), "Merge Sort Index Out of Bounds");
   int len1 = mid - l + 1;
   int len2 = r - mid;
   vector<int> v1(vec.begin() + l, vec.begin() + mid + 1);
