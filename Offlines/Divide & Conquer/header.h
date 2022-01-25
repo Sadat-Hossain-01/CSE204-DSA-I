@@ -6,6 +6,8 @@
 #define assertm(exp, msg) assert(((void)msg, exp))
 
 using namespace std;
+
+inline void swap(int &a, int &b) { b = (a + b) - (a = b); }
 inline int generateRandomNumber(int a, int b) {
   // [a, b]
   return rand() % (b - a + 1) + a;
@@ -43,7 +45,7 @@ void mergeSort(vector<int> &vec) {
 }
 
 int partition(vector<int> &vec, int l, int r, bool randomizedPivot) {
-  assertm(l >= 0 && r < (int)vec.size(), "Quick Sort Index Out of Bounds");
+  // assertm(l >= 0 && r < (int)vec.size(), "Quick Sort Index Out of Bounds");
   if (randomizedPivot) {
     int pivot = generateRandomNumber(l, r);
     swap(vec[pivot], vec[r]);
@@ -51,7 +53,7 @@ int partition(vector<int> &vec, int l, int r, bool randomizedPivot) {
   int x = vec[r];
   int i = l - 1;
   for (int j = l; j < r; j++) {
-    assertm(i + 1 <= r, "Quick Sort Index Out of Bounds");
+    // assertm(i + 1 <= r, "Quick Sort Index Out of Bounds");
     if (vec[j] <= x) swap(vec[++i], vec[j]);
   }
   swap(vec[++i], vec[r]);
