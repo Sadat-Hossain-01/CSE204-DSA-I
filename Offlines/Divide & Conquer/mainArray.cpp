@@ -47,6 +47,7 @@ int main() {
       mergeSort(arrayToPass, 0, len - 1);
       clock_t end = clock();
       ms += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Merge Sort done. Average Until now: " << ms * 1000 / repeat
              << "ms" << endl;
@@ -56,6 +57,7 @@ int main() {
       quickSort(arrayToPass, 0, len - 1);
       end = clock();
       qs += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Quick Sort done. Average Until now: " << qs * 1000 / repeat
              << "ms" << endl;
@@ -65,6 +67,7 @@ int main() {
       randomizedQuickSort(arrayToPass, 0, len - 1);
       end = clock();
       rqs += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Randomized Quick Sort done. Average Until now: "
              << rqs * 1000 / repeat << "ms" << endl;
@@ -74,6 +77,7 @@ int main() {
       insertionSort(arrayToPass, len);
       end = clock();
       is += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Insertion Sort done. Average Until now: " << is * 1000 / repeat
              << "ms" << endl;
@@ -82,6 +86,7 @@ int main() {
       quickSort(arrayToPass, 0, len - 1);
       end = clock();
       qsi += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Quick Sort on sorted input done. Average Until now: "
              << qsi * 1000 / repeat << "ms" << endl;
@@ -90,6 +95,7 @@ int main() {
       randomizedQuickSort(arrayToPass, 0, len - 1);
       end = clock();
       rqsi += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr
             << "Randomized Quick Sort on sorted input done. Average Until now: "
@@ -100,6 +106,7 @@ int main() {
       sort(arrayToPass, arrayToPass + len);
       end = clock();
       stls += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "STL sort done. Average Until now: " << stls * 1000 / repeat
              << "ms" << endl;
@@ -120,6 +127,8 @@ int main() {
     //      << "ms" << endl;
     // cout << "STL Sort : " << stls * 1000 / repeat << "ms" << endl;
     // cout << endl;
+
+    repeat--;
 
     cout << ms * 1000 / repeat << ", " << qs * 1000 / repeat << ", "
          << rqs * 1000 / repeat << ", " << is * 1000 / repeat << ", "

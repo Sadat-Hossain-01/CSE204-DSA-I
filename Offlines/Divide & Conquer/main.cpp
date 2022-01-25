@@ -44,6 +44,7 @@ int main() {
       mergeSort(vec);
       clock_t end = clock();
       ms += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "Merge Sort done. Average Until now: " << ms * 1000 / repeat
              << "ms" << endl;
@@ -53,6 +54,7 @@ int main() {
       quickSort(vec);
       end = clock();
       qs += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "Quick Sort done. Average Until now: " << qs * 1000 / repeat
              << "ms" << endl;
@@ -62,6 +64,7 @@ int main() {
       randomizedQuickSort(vec);
       end = clock();
       rqs += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "Randomized Quick Sort done. Average Until now: "
              << rqs * 1000 / repeat << "ms" << endl;
@@ -71,6 +74,7 @@ int main() {
       insertionSort(vec);
       end = clock();
       is += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "Insertion Sort done. Average Until now: " << is * 1000 / repeat
              << "ms" << endl;
@@ -79,6 +83,7 @@ int main() {
       quickSort(vec);
       end = clock();
       qsi += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "Quick Sort on sorted input done. Average Until now: "
              << qsi * 1000 / repeat << "ms" << endl;
@@ -87,6 +92,7 @@ int main() {
       randomizedQuickSort(vec);
       end = clock();
       rqsi += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr
             << "Randomized Quick Sort on sorted input done. Average Until now: "
@@ -97,6 +103,7 @@ int main() {
       sort(vec.begin(), vec.end());
       end = clock();
       stls += double(end - now) / CLOCKS_PER_SEC;
+      assert(isSorted(vec));
       if (commentOn)
         cerr << "STL sort done. Average Until now: " << stls * 1000 / repeat
              << "ms" << endl;

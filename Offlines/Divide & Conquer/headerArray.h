@@ -13,44 +13,42 @@ inline int generateRandomNumber(int a, int b) {
   return rand() % (b - a + 1) + a;
 }
 
-void merge(int *arr, int l, int mid, int r) {
-  //   assertm(l >= 0 && r < (int)vec.size(), "Merge Sort Index Out of Bounds");
+void merge(int *arr, int l, int mid, int r, int *temp) {
   int len1 = mid - l + 1;
   int len2 = r - mid;
 
-  int *arr1 = new int[len1];
-  int *arr2 = new int[len2];
-  for (int i = l, j = 0; i <= mid; i++) arr1[j++] = arr[i];
-  for (int i = mid + 1, j = 0; i <= r; i++) arr2[j++] = arr[i];
+  int j = 0;
+  for (int i = l; i <= mid; i++) temp[j++] = arr[i];
+  for (int i = mid + 1; i <= r; i++) temp[j++] = arr[i];
 
-  int lx = 0, rx = 0;
+  int lx = 0, rx = len1;
   int index = l;
-  while (lx < len1 && rx < len2) {
-    if (arr1[lx] <= arr2[rx])
-      arr[index++] = arr1[lx++];
+  while (lx < len1 && rx < len1 + len2) {
+    if (temp[lx] <= temp[rx])
+      arr[index++] = temp[lx++];
     else
-      arr[index++] = arr2[rx++];
+      arr[index++] = temp[rx++];
   }
-  while (lx < len1) arr[index++] = arr1[lx++];
-  while (rx < len2) arr[index++] = arr2[rx++];
-
-  delete[] arr1;
-  delete[] arr2;
+  while (lx < len1) arr[index++] = temp[lx++];
+  while (rx < len1 + len2) arr[index++] = temp[rx++];
 }
-void mergeSort(int *arr, int l, int r) {
+void mergeSortRecursive(int *arr, int l, int r, int *temp) {
   if (l >= r) return;
   int mid = l + (r - l) / 2;
-  mergeSort(arr, l, mid);
-  mergeSort(arr, mid + 1, r);
-  merge(arr, l, mid, r);
+  mergeSortRecursive(arr, l, mid, temp);
+  mergeSortRecursive(arr, mid + 1, r, temp);
+  merge(arr, l, mid, r, temp);
+}
+void mergeSort(int *arr, int l, int r) {
+  int *temp = new int[r - l + 1];
+  mergeSortRecursive(arr, l, r, temp);
+  delete[] temp;
 }
 
 int partition(int *arr, int l, int r) {
-  // assertm(l >= 0 && r < (int)vec.size(), "Quick Sort Index Out of Bounds");
   int x = arr[r];
   int i = l - 1;
   for (int j = l; j < r; j++) {
-    // assertm(i + 1 <= r, "Quick Sort Index Out of Bounds");
     if (arr[j] <= x) swap(arr[++i], arr[j]);
   }
   swap(arr[++i], arr[r]);
@@ -84,4 +82,10 @@ void insertionSort(int *arr, int len) {
     }
     arr[j + 1] = key;
   }
+}
+
+bool isSorted(int *arr, int len) {
+  for (int i = 1; i < len; i++)
+    if (arr[i] < arr[i - 1]) return false;
+  return true;
 }
