@@ -2,6 +2,7 @@
 #include <cstdlib>
 
 #define endl "\n"
+
 #define assertm(exp, msg) assert(((void)msg, exp))
 
 using namespace std;
