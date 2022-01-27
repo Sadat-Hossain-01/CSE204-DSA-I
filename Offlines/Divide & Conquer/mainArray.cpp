@@ -10,7 +10,7 @@
 using namespace std;
 
 const int REPEAT = 20;
-const bool commentOn = true;
+const bool commentOn = false;
 const bool sortedCheck = false;
 
 inline std::chrono::high_resolution_clock::time_point getCurrentHighResClock() {
@@ -48,7 +48,7 @@ void copyArray(int* from, int* to, int len) {
 
 int main() {
   auto start = getCurrentHighResClock();
-  freopen("outArray.csv", "w", stdout);
+  freopen("out.csv", "w", stdout);
   cout << "Time required in ms" << endl;
   cout << "n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, "
           "Quicksort with Sorted Input, Randomized Quicksort with Sorted "
@@ -72,7 +72,8 @@ int main() {
       ms += getElapsedTime(begin);
       if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
-        cerr << "Merge Sort done. Average Until now: " << ms / repeat << "ms"
+        cerr << fixed << setprecision(30)
+             << "Merge Sort done. Average Until now: " << ms / repeat << "ms"
              << endl;
 
       copyArray(generatedArrayForThis, arrayToPass, len);
@@ -132,7 +133,7 @@ int main() {
         cerr << "n = " << length[i] << " " << repeat << " times done" << endl;
     }
 
-    cout << setprecision(8) << (ms / REPEAT) << ", " << (qs / REPEAT) << ", "
+    cout << setprecision(10) << (ms / REPEAT) << ", " << (qs / REPEAT) << ", "
          << (rqs / REPEAT) << ", " << (is / REPEAT) << ", " << (qsi / REPEAT)
          << ", " << (rqsi / REPEAT) << ", " << (stls / REPEAT) << endl;
 
