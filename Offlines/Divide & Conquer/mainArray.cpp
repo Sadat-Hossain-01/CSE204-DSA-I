@@ -1,12 +1,29 @@
 #include <algorithm>
+#include <chrono>
 #include <ctime>
+#include <iomanip>
 #include <iostream>
+#include <ratio>
 #include <vector>
 
 #include "headerArray.h"
 using namespace std;
 
+const int REPEAT = 20;
 const bool commentOn = false;
+const bool sortedCheck = false;
+
+inline std::chrono::high_resolution_clock::time_point getCurrent() {
+  return std::chrono::high_resolution_clock::now();
+}
+
+inline double getElapsedTime(
+    const std::chrono::high_resolution_clock::time_point& t1) {
+  auto t2 = getCurrent();
+  auto time_span =
+      std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1);
+  return time_span.count() / 1e6;  // ms
+}
 
 vector<int> length{5, 10, 100, 1000, 10000, 100000};
 
@@ -22,7 +39,7 @@ void copyArray(int* from, int* to, int len) {
 }
 
 int main() {
-  clock_t start = clock();
+  auto start = getCurrent();
   freopen("outArray.csv", "w", stdout);
   cout << "Time required in ms" << endl;
   cout << "n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, "
@@ -33,113 +50,89 @@ int main() {
   for (int i = 0; i < length.size(); i++) {
     int len = length[i];
     cout << len << ", ";
-    int* arrayForThis = new int[len];
+    int* generatedArrayForThis = new int[len];
     int* arrayToPass = new int[len];
-    double ms = 0, qs = 0, rqs = 0, is = 0, qsi = 0, rqsi = 0, stls = 0;
-    int repeat;
-    for (repeat = 1; repeat <= 20; repeat++) {
-      int seed = rand();
+    double ms = 0.0, qs = 0.0, rqs = 0.0, is = 0.0, qsi = 0.0, rqsi = 0.0,
+           stls = 0.0;
 
-      generateRandomArray(arrayForThis, i);
+    for (int repeat = 1; repeat <= REPEAT; repeat++) {
+      generateRandomArray(generatedArrayForThis, i);
 
-      copyArray(arrayForThis, arrayToPass, len);
-      clock_t now = clock();
+      copyArray(generatedArrayForThis, arrayToPass, len);
+      auto begin = getCurrent();
       mergeSort(arrayToPass, 0, len - 1);
-      clock_t end = clock();
-      ms += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      ms += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
-        cerr << "Merge Sort done. Average Until now: " << ms * 1000 / repeat
-             << "ms" << endl;
+        cerr << "Merge Sort done. Average Until now: " << ms / repeat << "ms"
+             << endl;
 
-      copyArray(arrayForThis, arrayToPass, len);
-      now = clock();
+      copyArray(generatedArrayForThis, arrayToPass, len);
+      begin = getCurrent();
       quickSort(arrayToPass, 0, len - 1);
-      end = clock();
-      qs += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      qs += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
-        cerr << "Quick Sort done. Average Until now: " << qs * 1000 / repeat
-             << "ms" << endl;
+        cerr << "Quick Sort done. Average Until now: " << qs / repeat << "ms"
+             << endl;
 
-      copyArray(arrayForThis, arrayToPass, len);
-      now = clock();
+      copyArray(generatedArrayForThis, arrayToPass, len);
+      begin = getCurrent();
       randomizedQuickSort(arrayToPass, 0, len - 1);
-      end = clock();
-      rqs += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      rqs += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Randomized Quick Sort done. Average Until now: "
-             << rqs * 1000 / repeat << "ms" << endl;
+             << rqs / repeat << "ms" << endl;
 
-      copyArray(arrayForThis, arrayToPass, len);
-      now = clock();
+      copyArray(generatedArrayForThis, arrayToPass, len);
+      begin = getCurrent();
       insertionSort(arrayToPass, len);
-      end = clock();
-      is += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      is += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
-        cerr << "Insertion Sort done. Average Until now: " << is * 1000 / repeat
+        cerr << "Insertion Sort done. Average Until now: " << is / repeat
              << "ms" << endl;
 
-      now = clock();
+      begin = getCurrent();
       quickSort(arrayToPass, 0, len - 1);
-      end = clock();
-      qsi += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      qsi += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr << "Quick Sort on sorted input done. Average Until now: "
-             << qsi * 1000 / repeat << "ms" << endl;
+             << qsi / repeat << "ms" << endl;
 
-      now = clock();
+      begin = getCurrent();
       randomizedQuickSort(arrayToPass, 0, len - 1);
-      end = clock();
-      rqsi += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      rqsi += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
         cerr
             << "Randomized Quick Sort on sorted input done. Average Until now: "
-            << rqsi * 1000 / repeat << "ms" << endl;
+            << rqsi / repeat << "ms" << endl;
 
-      copyArray(arrayForThis, arrayToPass, len);
-      now = clock();
+      copyArray(generatedArrayForThis, arrayToPass, len);
+      begin = getCurrent();
       sort(arrayToPass, arrayToPass + len);
-      end = clock();
-      stls += double(end - now) / CLOCKS_PER_SEC;
-      assert(isSorted(arrayToPass, len));
+      stls += getElapsedTime(begin);
+      if (sortedCheck) assert(isSorted(arrayToPass, len));
       if (commentOn)
-        cerr << "STL sort done. Average Until now: " << stls * 1000 / repeat
-             << "ms" << endl;
+        cerr << "STL sort done. Average Until now: " << stls / repeat << "ms"
+             << endl;
 
       if (commentOn)
         cerr << "n = " << length[i] << " " << repeat << " times done" << endl;
     }
 
-    // cout << "n = " << length[i] << endl;
-    // cout << "Merge Sort: " << ms * 1000 / repeat << "ms" << endl;
-    // cout << "Quick Sort: " << qs * 1000 / repeat << "ms" << endl;
-    // cout << "Randomized Quick Sort: " << rqs * 1000 / repeat << "ms" << endl;
-    // cout << "Insertion Sort: " << is * 1000 / repeat << "ms" << endl;
-    // cout << "Quick Sort with Sorted Input: " << qsi * 1000 / repeat << "ms"
-    //      << endl;
-    // cout << "Randomized Quick Sort with Sorted Input: " << rqsi * 1000 /
-    // repeat
-    //      << "ms" << endl;
-    // cout << "STL Sort : " << stls * 1000 / repeat << "ms" << endl;
-    // cout << endl;
+    cout << setprecision(8) << (ms / REPEAT) << ", " << (qs / REPEAT) << ", "
+         << (rqs / REPEAT) << ", " << (is / REPEAT) << ", " << (qsi / REPEAT)
+         << ", " << (rqsi / REPEAT) << ", " << (stls / REPEAT) << endl;
 
-    repeat--;
-
-    cout << ms * 1000 / repeat << ", " << qs * 1000 / repeat << ", "
-         << rqs * 1000 / repeat << ", " << is * 1000 / repeat << ", "
-         << qsi * 1000 / repeat << ", " << rqsi * 1000 / repeat << ", "
-         << stls * 1000 / repeat << endl;
-
-    delete[] arrayForThis;
+    delete[] generatedArrayForThis;
     delete[] arrayToPass;
   }
 
-  cerr << "Program ended in " << double(clock() - start) / CLOCKS_PER_SEC
-       << " seconds" << endl;
+  cerr << "Program ended in " << getElapsedTime(start) / 1000.0 << " seconds"
+       << endl;
   return 0;
 }
