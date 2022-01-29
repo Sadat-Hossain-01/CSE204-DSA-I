@@ -1,8 +1,0 @@
-Time required in ms
-n, Merge Sort, Quicksort, Randomized Quicksort, Insertion Sort, Quicksort with Sorted Input, Randomized Quicksort with Sorted Input, STL sort() function
-5, 0, 0, 0, 0, 0, 0, 0
-10, 0, 0, 0, 0, 0, 0, 0
-100, 0, 0, 0, 0, 0.049885, 0, 0
-1000, 0.04986, 0, 0.149585, 0.648295, 2.194265, 0.09971, 0.04988
-10000, 0.99719, 0.84924, 1.145525, 45.741745, 220.421925, 0.64496, 1.044635
-100000, 12.069215, 11.567715, 13.317125, 4564.169695, 21953.59983, 9.29534, 12.391045
