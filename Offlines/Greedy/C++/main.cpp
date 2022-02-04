@@ -11,11 +11,11 @@ int main() {
   vector<int> prices(n);
   for (int &i : prices) cin >> i;
   sort(prices.rbegin(), prices.rend());
-  int ans = 0;
+  long long int ans = 0;
   for (int i = 0; i < n; i++) {
     // ans += ((i + 1 + k - 1) / k) * prices[i];
     // (a + b - 1) / b gives ceil(a/b)
-    ans += ((i + k) / k) * prices[i];
+    ans += 1LL * ((i + k) / k) * prices[i];
   }
   cout << ans << endl;
   return 0;
