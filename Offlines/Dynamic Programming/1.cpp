@@ -42,7 +42,7 @@ int main() {
   string ans = "";
   int ax = m, bx = n;
   while (ax && bx) {
-    if (dp[ax][bx] == dp[ax - 1][bx - 1] + 1) {
+    if (dp[ax][bx] == dp[ax - 1][bx - 1] + 1 && a[ax - 1] == b[bx - 1]) {
       ans.push_back(a[ax - 1]);
       ax--;
       bx--;
