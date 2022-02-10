@@ -20,7 +20,8 @@ void printTable(const vector<vector<T>> &vec) {
 
 int main() {
   string a, b;
-  cin >> a >> b;
+  getline(cin, a);
+  getline(cin, b);
   int m = a.size();
   int n = b.size();
   vector<vector<int>> dp(m + 1, vector<int>(n + 1, NINF));
