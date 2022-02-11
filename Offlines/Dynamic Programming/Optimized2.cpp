@@ -7,8 +7,16 @@ using namespace std;
 const int INF = 2e9;
 inline void min_self(int& a, int b) { a = min(a, b); }
 
+template <typename T>
+void printTable(const vector<T>& vec) {
+  for (int i = 0; i < vec.size(); i++) cerr << vec[i] << " ";
+  cerr << endl;
+}
+
 int solve(int n, const vector<vector<int>>& A) {
   vector<int> dp(1 << n, INF);
+  // dp[mask] denotes the minimum cost to visit all the cities
+  // that are set in mask
   dp[0] = 0;
 
   for (int mask = 0; mask < (1 << n); mask++) {
@@ -30,6 +38,9 @@ int solve(int n, const vector<vector<int>>& A) {
       min_self(dp[mask], dp[prev_mask] + additional_cost);
     }
   }
+
+  // printTable(dp);
+
   // the ans is dp[(1<<n) - 1], which is the last value of dp vector
   return dp.back();
 }
