@@ -55,6 +55,26 @@ int dp_solution(int n, const vector<vector<int>>& cost) {
   return ans;
 }
 
+int optimized_dp_solve(int n, const vector<vector<int>>& A) {
+  vector<int> dp(1 << n, INF);
+  dp[0] = 0;
+
+  for (int mask = 0; mask < (1 << n); mask++) {
+    for (int bit = 0; bit < n; bit++) {
+      if (!(mask & (1 << bit))) continue;
+      // so bit is set in mask
+      int additional_cost = A[bit][bit];
+      int prev_mask = mask ^ (1 << bit);
+      for (int prev_visited = 0; prev_visited < n; prev_visited++) {
+        if (prev_mask & (1 << prev_visited))
+          additional_cost += A[bit][prev_visited];
+      }
+      min_self(dp[mask], dp[prev_mask] + additional_cost);
+    }
+  }
+  return dp.back();
+}
+
 int main() {
   int n;
   cin >> n;
@@ -65,5 +85,6 @@ int main() {
     }
   }
   cout << "Bruteforce: " << bruteforce_solution(n, cost)
-       << " DP: " << dp_solution(n, cost) << endl;
+       << " DP: " << dp_solution(n, cost)
+       << " Optimized DP: " << optimized_dp_solve(n, cost) << endl;
 }

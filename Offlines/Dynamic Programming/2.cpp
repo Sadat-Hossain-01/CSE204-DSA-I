@@ -1,3 +1,4 @@
+#include <climits>
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -22,7 +23,9 @@ int main() {
   for (int i = 0; i < n; i++)
     for (int j = 0; j < n; j++) cin >> cost[i][j];
   vector<vector<int>> dp(n, vector<int>(1 << n, INF));
+
   for (int i = 0; i < n; i++) dp[i][1 << i] = cost[i][i];
+
   for (int mask = 0; mask < (1 << n); mask++) {
     for (int i = 0; i < n; i++) {
       if (!(mask & (1 << i))) continue;
