@@ -49,50 +49,26 @@ void _print(T t, V... v) {
 #define debug(x...)
 #endif
 
-bool on = true;
-int m, n;
-
-ll kruskal(const vector<pair<int, pair<int, int>>>& edges) {
-  vector<int> tree_id(m);
-  iota(tree_id.begin(), tree_id.end(), 0);
-  ll min_cost = 0;
-  for (const auto& e : edges) {
-    if (tree_id[e.second.first] != tree_id[e.second.second]) {
-      min_cost += e.first;
-
-      int old_id = tree_id[e.second.first];
-      int new_id = tree_id[e.second.second];
-      for (int i = 0; i < m; i++) {
-        if (tree_id[i] == old_id) tree_id[i] = new_id;
-      }
-    }
-  }
-  return min_cost;
-}
+const int INF = 2e9;
 
 void solve() {
-  cin >> m >> n;
-  if (m == n && m == 0) {
-    on = false;
-    return;
+  int n;
+  cin >> n;
+  vector<int> dp(n + 1, INF);
+  dp[0] = 0;
+  for (int i = 1; i <= n; i++) {
+    int j = 1;
+    while (j * j <= i) {
+      dp[i] = min(dp[i], dp[i - j * j] + 1);
+      j++;
+    }
   }
-  ll total_length = 0;
-  vector<pair<int, pair<int, int>>> edges(n);
-  for (int i = 0; i < n; i++) {
-    int x, y, z;
-    cin >> x >> y >> z;
-    edges[i] = {z, {x, y}};
-    total_length += z;
-  }
-  sort(edges.begin(), edges.end());
-  cout << total_length - kruskal(edges) << endl;
+  cout << dp[n] << endl;
 }
 
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
 
-  while (on)
-    // cout << "Case #" << tc << ": ";
-    solve();
+  solve();
 }
